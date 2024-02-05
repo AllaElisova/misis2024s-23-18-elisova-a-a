@@ -1,4 +1,4 @@
-#include "stackarr.hpp"
+#include "stack.hpp"
 
 StackArr::StackArr(const StackArr& other) {
 

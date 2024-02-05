@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef STACKARR_HPP
-#define STACKARR_HPP
+#ifndef STACK_HPP
+#define STACK_HPP
 
 #include <iostream>
 
