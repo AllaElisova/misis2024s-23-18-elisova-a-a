@@ -21,5 +21,5 @@ bool StackArr::IsEmpty() const noexcept{
 }
 
 const Complex& Top() {
-
+	return *(data_ + size_);
 }
