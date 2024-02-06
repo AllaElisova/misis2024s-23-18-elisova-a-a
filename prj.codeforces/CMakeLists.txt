@@ -1,0 +1,1 @@
+add_executable (0379a 0379a.cpp)

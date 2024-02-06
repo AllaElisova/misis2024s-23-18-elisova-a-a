@@ -10,7 +10,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG bin.dbg)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE bin.rel)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO bin.relwithdbg)
 
-option(BUILD_WITH_CODEFORCES "Build prj.codeforces targets" off)
+option(BUILD_WITH_CODEFORCES "Build prj.codeforces targets" on)
 
 if (BUILD_WITH_CODEFORCES)
   add_subdirectory(prj.codeforces)
