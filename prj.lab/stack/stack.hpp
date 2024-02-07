@@ -4,13 +4,14 @@
 #define STACK_HPP
 
 #include <iostream>
+#include <complex/complex.hpp>
 
 class StackArr {
 public:
 	StackArr() = default;
 	StackArr(const StackArr& other);
 
-	StackArr& operator=();
+	StackArr& operator=(const StackArr& other);
 
 	void Push(const Complex& complex);
 	void Pop() noexcept;
@@ -22,7 +23,9 @@ public:
 private:
 	int32_t size_{ 0 };
 	int32_t capacity_{ 0 };
-	float* data_ = nullptr;
+	int32_t elems_ = 0;
+	Complex* data_ = nullptr;
+	Complex* head_ = 0;
 };
 
 #endif

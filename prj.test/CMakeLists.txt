@@ -7,4 +7,8 @@ target_link_libraries(test_rational rational)
 add_executable(test_dynarr test_dynarr.cpp)
 target_link_libraries(test_dynarr dynarr)
 
+add_executable(test_stack test_stack.cpp)
+target_link_libraries(test_stack stack)
+target_link_libraries(test_stack complex)
+
 #set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT test_dynarr)
