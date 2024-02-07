@@ -39,7 +39,7 @@ void StackArr::Pop() noexcept {
 }
 
 bool StackArr::IsEmpty() const noexcept{
-	return (size_ == 0);
+	return (elems_ == 0);
 }
 
 const Complex& StackArr::Top() {
