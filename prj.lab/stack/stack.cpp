@@ -20,32 +20,34 @@ StackArr& StackArr::operator=(const StackArr& other) {
 }
 
 void StackArr::Push(const Complex& complex) {
-
 	if (size_ == 0) {
 		data_ = new Complex[8];
-		++size_;
+		data_[1] = complex;
+		size_ = 8;
 	}
 
 	else if (head_ + 1 > data_ + size_) {
 		Complex* x = nullptr;
 		x = new Complex[size_ * 2];
 		std::copy(data_, data_ + size_, x);
-		std::copy(x, x + size_, data_);
+		x[size_] = complex;
 		size_ *= 2;
+		std::copy(x, x + size_, data_);
 	}
 	else {
-		++size_;
+		data_[elems_ + 1] = complex;
 	}
-	Complex y = complex;
-	head_ = &y;
+
 	++elems_;
+	head_ = data_ + elems_;
 }
 
 void StackArr::Pop() noexcept {
-	delete(data_ + elems_);
+
 	if (elems_ > 0) {
+		head_ = nullptr;
 		--elems_;
-		head_ -= 1;
+		head_ = data_ + elems_;
 	}
 }
 
