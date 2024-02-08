@@ -38,7 +38,7 @@ int main() {
   }
   else {
     answer += 1;
-    if (groups[1] > groups[3]) {
+    if ((groups[1] > groups[3]) && (groups[1] - groups[3] > 2)) {
       if ((groups[1] - groups[3] - 2) % 4 == 0) {
         answer += ((groups[1] - groups[3] - 2) / 4);
       }
