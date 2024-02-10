@@ -33,6 +33,7 @@ void StackArr::Push(const Complex& complex) {
 		x[size_] = complex;
 		size_ *= 2;
 		std::copy(x, x + size_, data_);
+		delete[] x;
 	}
 	else {
 		data_[elems_ + 1] = complex;
