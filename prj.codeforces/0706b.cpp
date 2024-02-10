@@ -1,5 +1,3 @@
-// not finished
-
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -31,11 +29,11 @@ int main() {
 		int money = 0;
 		std::cin >> money;
 
-		while (left <= right) {
+		while (left < right) {
 			if (money >= markets.at(middle)) {
-				answer += middle - left;
+				answer += (middle - left + 1);
 				left = middle + 1;
-				middle = (left + right) / 2;
+				middle = (left + right - 1) / 2;
 			}
 
 			else if (money < markets.at(middle)) {
@@ -46,3 +44,4 @@ int main() {
 		std::cout << answer << std::endl;
 	}
 }
+
