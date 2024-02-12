@@ -22,7 +22,7 @@ public:
 	~StackArr() = default;
 
 private:
-	int32_t size_{ 0 };
+	int32_t size_ = 0;
 	int32_t elems_ = 0;
 	Complex* data_ = nullptr;
 	Complex* head_ = 0;
