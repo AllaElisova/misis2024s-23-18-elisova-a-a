@@ -1,5 +1,5 @@
 #include <iostream>
-#include <stack/stack.hpp>
+#include <stackarr/stackarr.hpp>
 #include <complex/complex.hpp>
 
 int main() {
@@ -19,4 +19,7 @@ int main() {
 	StackArr c;
 	c = b;
 	std::cout << c.Top() << std::endl;
+
+	c.Clear();
+	std::cout << c.IsEmpty() << std::endl;
 }

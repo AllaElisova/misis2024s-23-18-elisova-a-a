@@ -1,4 +1,4 @@
-#include "stack.hpp"
+#include "stackarr.hpp"
 #include <complex/complex.hpp>
 
 StackArr::StackArr(const StackArr& other) {
@@ -63,4 +63,12 @@ const Complex& StackArr::Top() {
 	else {
 		return *(head_);
 	}
+}
+
+void StackArr::Clear() noexcept {
+	size_ = 0;
+	elems_ = 0;
+	delete[] data_;
+	data_ = nullptr;
+	head_ = 0;
 }

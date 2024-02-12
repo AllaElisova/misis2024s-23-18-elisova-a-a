@@ -1,7 +1,7 @@
-add_library(stack stack.cpp stack.hpp)
-set_property(TARGET stack PROPERTY CXX_STANDARD 20)
+add_library(stackarr stackarr.cpp stackarr.hpp)
+set_property(TARGET stackarr PROPERTY CXX_STANDARD 20)
 
-target_include_directories(stack PUBLIC
+target_include_directories(stackarr PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/..>
   $<INSTALL_INTERFACE:include>
 )
@@ -11,5 +11,5 @@ target_include_directories(complex PUBLIC
   $<INSTALL_INTERFACE:include>
 )
 
-install(TARGETS stack)
+install(TARGETS stackarr)
 install(TARGETS complex)
