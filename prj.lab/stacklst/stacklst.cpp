@@ -1,4 +1,4 @@
-#include "stacklst.hpp"
+/* #include "stacklst.hpp"
 #include <complex/complex.hpp>
 
 StackLst::StackLst(const StackLst& other) {
@@ -24,5 +24,4 @@ void StackLst::Push(const Complex& complex) {
 
 	}
 
-	head_ = new_element;
-}
+} */

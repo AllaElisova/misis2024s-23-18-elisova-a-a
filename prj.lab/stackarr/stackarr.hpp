@@ -3,15 +3,17 @@
 #ifndef STACKARR_HPP
 #define STACKARR_HPP
 
-#include <iostream>
+#include <initializer_list>
 #include <complex/complex.hpp>
 
 class StackArr {
 public:
 	StackArr() = default;
 	StackArr(const StackArr& other);
+	StackArr(const std::initializer_list<Complex>& list);
 
 	StackArr& operator=(const StackArr& other);
+	StackArr& operator=(const std::initializer_list<Complex>& list);
 
 	void Push(const Complex& complex);
 	void Pop() noexcept;
@@ -19,7 +21,7 @@ public:
 	const Complex& Top();
 	void Clear() noexcept;
 
-	~StackArr() = default;
+	~StackArr();
 
 private:
 	int32_t size_ = 0;
