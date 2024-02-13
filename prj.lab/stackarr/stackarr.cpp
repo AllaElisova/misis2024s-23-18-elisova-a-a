@@ -95,4 +95,4 @@ void StackArr::Clear() noexcept {
 
 StackArr::~StackArr() {
 	delete[] data_;
-}
+} 

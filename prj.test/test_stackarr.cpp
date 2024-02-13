@@ -52,6 +52,10 @@ TEST_CASE("initializer list ctor") {
 
 TEST_CASE("copy ctor") {
   StackArr ss = { z1, z2, z3 };
+  /*StackArr ss;
+  ss.Push(z1);
+  ss.Push(z2);
+  ss.Push(z3); */
   StackArr s (ss);
 
   CHECK_EQ(z3, s.Top());
@@ -87,4 +91,4 @@ TEST_CASE("is empty") {
 
   CHECK_EQ(s.IsEmpty(), true);
   CHECK_THROWS(s.Top());
-}
+} 
