@@ -35,6 +35,10 @@ TEST_CASE("copy ctor") {
   StackLst s(ss);
 
   CHECK_EQ(z3, s.Top());
+  CHECK_EQ(z3, ss.Top());
+
+  CHECK_EQ(s.IsEmpty(), false);
+
   s.Pop();
   CHECK_EQ(z2, s.Top());
   s.Pop();
@@ -42,3 +46,25 @@ TEST_CASE("copy ctor") {
 
   CHECK_EQ(z3, ss.Top());
 } 
+
+TEST_CASE("eq operator") {
+  StackLst ss;
+  ss.Push(z1);
+  ss.Push(z2);
+  ss.Push(z3);
+  StackLst s = ss;
+
+  CHECK_EQ(z3, s.Top());
+  s.Pop();
+  s.Pop();
+  s.Pop();
+  CHECK_THROWS(s.Top());
+}
+
+TEST_CASE("clear") {
+  StackLst s;
+  s.Push(Complex(7, 8));
+  s.Push(Complex(9, 0));
+  s.Clear();
+  CHECK_EQ(s.IsEmpty(), true);
+}
