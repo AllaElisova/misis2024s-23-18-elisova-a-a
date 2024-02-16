@@ -1,6 +1,7 @@
 #ifndef COMPLEX_HPP
 #define COMPLEX_HPP
 #include <iostream>
+#include <cstdlib>
 #include <limits>
 
 struct Complex {
