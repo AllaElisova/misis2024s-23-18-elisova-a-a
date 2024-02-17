@@ -1,4 +1,5 @@
 #include <initializer_list>
+#include <cstdlib>
 #include "stackarr.hpp"
 #include <complex/complex.hpp>
 

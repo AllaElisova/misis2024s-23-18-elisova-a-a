@@ -4,6 +4,7 @@
 #define STACKARR_HPP
 
 #include <initializer_list>
+#include <cstdlib>
 #include <complex/complex.hpp>
 
 class StackArr {

@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include "stacklst.hpp"
 #include <complex/complex.hpp>
 
@@ -22,7 +23,7 @@ StackLst::StackLst(const StackLst& other) {
 }
 
 StackLst& StackLst::operator=(const StackLst& other) {
-	
+	(*this).Clear();
 	head_ = new Node;
 	head_->v = other.head_->v;
 	Node* next_element = other.head_;

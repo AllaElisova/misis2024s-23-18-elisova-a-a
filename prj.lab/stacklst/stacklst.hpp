@@ -3,7 +3,7 @@
 #ifndef STACKLST_HPP
 #define STACKLST_HPP
 
-
+#include <cstdlib>
 #include <complex/complex.hpp>
 
 class StackLst {
