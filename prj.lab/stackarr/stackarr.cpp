@@ -1,5 +1,6 @@
 #include <initializer_list>
 #include <cstdlib>
+#include <algorithm>
 #include "stackarr.hpp"
 #include <complex/complex.hpp>
 
@@ -8,6 +9,14 @@ StackArr::StackArr(const StackArr& other) {
 	data_ = new Complex[size_];
 	elems_ = other.elems_;
 	std::copy(other.data_, other.data_ + other.size_, data_);
+	head_ = data_ + elems_ - 1;
+}
+
+StackArr::StackArr(const std::initializer_list<Complex>& list){
+	size_ = list.size() * 2;
+	elems_ = list.size();
+	data_ = new Complex[size_];
+	std::copy(list.begin(), list.end(), data_);
 	head_ = data_ + elems_ - 1;
 }
 
@@ -29,14 +38,6 @@ StackArr& StackArr::operator=(const std::initializer_list <Complex>& list){
 	std::copy(list.begin(), list.end(), data_);
 	head_ = data_ + elems_ - 1;
 	return *this;
-}
-
-StackArr::StackArr(const std::initializer_list <Complex>& list) {
-	size_ = list.size() * 2;
-	elems_ = list.size();
-	data_ = new Complex[size_];
-	std::copy(list.begin(), list.end(), data_);
-	head_ = data_ + elems_ - 1;
 }
 
 void StackArr::Push(const Complex& complex) {
@@ -96,4 +97,4 @@ void StackArr::Clear() noexcept {
 
 StackArr::~StackArr() {
 	delete[] data_;
-} 
+}

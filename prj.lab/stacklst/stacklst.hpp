@@ -4,6 +4,7 @@
 #define STACKLST_HPP
 
 #include <cstdlib>
+#include <algorithm>
 #include <complex/complex.hpp>
 
 class StackLst {

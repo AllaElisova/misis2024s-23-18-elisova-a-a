@@ -38,6 +38,7 @@ Complex z3 (5, 6);
 
 TEST_CASE("default ctor") {
   StackArr s;
+  CHECK_THROWS(s.Top());
 }
 
 TEST_CASE("initializer list ctor") {
@@ -63,6 +64,7 @@ TEST_CASE("copy ctor") {
   CHECK_EQ(z2, s.Top());
   s.Pop();
   CHECK_EQ(z1, s.Top());
+  s.Pop();
 
   CHECK_EQ(z3, ss.Top());
 }
