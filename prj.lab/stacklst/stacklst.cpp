@@ -1,6 +1,7 @@
 #include <cstdlib>
-#include "stacklst.hpp"
+#include <algorithm>
 #include <complex/complex.hpp>
+#include "stacklst.hpp"
 
 StackLst::StackLst(const StackLst& other) {
 
@@ -13,9 +14,7 @@ StackLst::StackLst(const StackLst& other) {
 		temp->next = new Node;
 		temp = temp->next;
 		next_element = next_element->next;
-
 		temp->v = next_element->v;
-
 	}
 	temp->next = nullptr;
 
@@ -78,10 +77,13 @@ const Complex& StackLst::Top() {
 }
 
 void StackLst::Clear() noexcept {
-	while (head_ != nullptr){
-		Node* next_element = (*head_).next;
-		delete (head_);
-		head_ = nullptr;
-		head_ = next_element;
+	if (head_ != nullptr){
+		Node* temp;
+
+		while (head_ != nullptr) {
+			temp = head_->next;
+			delete (head_);
+			head_ = temp;
+		}
 	}
 }

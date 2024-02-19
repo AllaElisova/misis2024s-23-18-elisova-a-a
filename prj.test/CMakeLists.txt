@@ -15,5 +15,5 @@ add_executable(test_stacklst test_stacklst.cpp)
 target_link_libraries(test_stacklst stacklst)
 target_link_libraries(test_stacklst complex)
 
-add_executable(test_queue test_queue.cpp)
-target_link_libraries(test_queue queue)
+add_executable(test_queuelst test_queuelst.cpp)
+target_link_libraries(test_queuelst queuelst)
