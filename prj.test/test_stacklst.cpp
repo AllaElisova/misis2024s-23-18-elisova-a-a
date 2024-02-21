@@ -15,7 +15,6 @@ int main() {
 #include <stacklst/stacklst.hpp>
 #include <complex/complex.hpp>
 #include "doctest.h"
-#include <fstream>
 
 Complex z1(1, 2);
 Complex z2(3, 4);
