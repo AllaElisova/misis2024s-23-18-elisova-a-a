@@ -11,22 +11,22 @@ public:
 	QueueLst() = default;
 	QueueLst(const QueueLst& other);
 
-	QueueLst& operator=(const Queue& other);
+	QueueLst& operator=(const QueueLst& other);
 
 	void Push(const Complex& complex);
 	void Pop();
-	bool IsEmpty() const noexcept;
 	const Complex& Top();
 	const Complex& End();
+	bool IsEmpty() const noexcept;
 	void Clear() noexcept;
 
 	~QueueLst() = default;
 
 private:
-	Struct Node{
+	struct Node {
 		Complex v;
 		Node* next = nullptr;
-	}
+	};
 
 	Node* head_ = nullptr;
 	Node* tail_ = nullptr;

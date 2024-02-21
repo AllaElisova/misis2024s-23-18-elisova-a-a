@@ -66,5 +66,6 @@ TEST_CASE("clear") {
   s.Push(Complex(7, 8));
   s.Push(Complex(9, 0));
   s.Clear();
+
   CHECK_EQ(s.IsEmpty(), true);
 }
