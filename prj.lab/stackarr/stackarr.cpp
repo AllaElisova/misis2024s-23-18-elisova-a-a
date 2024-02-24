@@ -78,7 +78,16 @@ bool StackArr::IsEmpty() const noexcept{
 	return (elems_ == 0);
 }
 
-const Complex& StackArr::Top() {
+const Complex& StackArr::Top() const {
+	if (elems_ == 0) {
+		throw std::invalid_argument("top of empty stack");
+	}
+	else {
+		return *(head_);
+	}
+}
+
+Complex& StackArr::Top() {
 	if (elems_ == 0) {
 		throw std::invalid_argument("top of empty stack");
 	}
