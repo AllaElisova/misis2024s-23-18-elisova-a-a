@@ -14,7 +14,7 @@ public:
 	QueueLst& operator=(const QueueLst& other);
 
 	void Push(const Complex& complex);
-	void Pop();
+	void Pop() noexcept;
 	const Complex& Top() const;
 	Complex& Top();
 	const Complex& End();

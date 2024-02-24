@@ -56,7 +56,7 @@ void QueueLst::Push(const Complex& complex) {
 	}
 }
 
-void QueueLst::Pop() {
+void QueueLst::Pop() noexcept {
 	if (head_ == nullptr) {
 		tail_ = nullptr;
 	}
