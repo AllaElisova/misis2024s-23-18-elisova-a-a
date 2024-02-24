@@ -67,7 +67,16 @@ bool StackLst::IsEmpty() const noexcept {
 		return (head_ == nullptr);
 }
 
-const Complex& StackLst::Top() {
+const Complex& StackLst::Top() const{
+	if (head_ == nullptr) {
+		throw std::invalid_argument("top of empty stack");
+	}
+	else {
+		return head_->v;
+	}
+}
+
+Complex& StackLst::Top() {
 	if (head_ == nullptr) {
 		throw std::invalid_argument("top of empty stack");
 	}

@@ -17,7 +17,8 @@ public:
 	void Push (const Complex& complex);
 	void Pop() noexcept;
 	bool IsEmpty() const noexcept;
-	const Complex& Top();
+	const Complex& Top() const;
+	Complex& Top();
 	void Clear() noexcept;
 
 	~StackLst() = default;
