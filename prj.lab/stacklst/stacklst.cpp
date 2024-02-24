@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <stdexcept>
 #include <algorithm>
 #include <complex/complex.hpp>
 #include "stacklst.hpp"

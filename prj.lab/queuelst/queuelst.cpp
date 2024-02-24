@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <stdexcept>
 #include <complex/complex.hpp>
 #include "queuelst.hpp"
 

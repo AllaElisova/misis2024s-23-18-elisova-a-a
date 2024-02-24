@@ -5,6 +5,7 @@
 
 #include <initializer_list>
 #include <cstdlib>
+#include <stdexcept>
 #include <complex/complex.hpp>
 
 class StackArr {

@@ -4,6 +4,7 @@
 #define STACKLST_HPP
 
 #include <cstdlib>
+#include <stdexcept>
 #include <algorithm>
 #include <complex/complex.hpp>
 

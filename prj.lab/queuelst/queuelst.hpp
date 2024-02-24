@@ -4,6 +4,7 @@
 #define QUEUELST_QUEUELST_HPP
 
 #include <cstdlib>
+#include <stdexcept>
 #include <complex/complex.hpp>
 
 class QueueLst {
