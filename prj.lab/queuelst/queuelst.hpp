@@ -15,7 +15,8 @@ public:
 
 	void Push(const Complex& complex);
 	void Pop();
-	const Complex& Top();
+	const Complex& Top() const;
+	Complex& Top();
 	const Complex& End();
 	bool IsEmpty() const noexcept;
 	void Clear() noexcept;

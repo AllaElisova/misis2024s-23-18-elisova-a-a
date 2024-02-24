@@ -74,7 +74,16 @@ void QueueLst::Pop() {
 	}
 }
 
-const Complex& QueueLst::Top() {
+const Complex& QueueLst::Top() const{
+	if (head_ == nullptr) {
+		throw std::invalid_argument("top of empty queue");
+	}
+	else {
+		return (head_->v);
+	}
+}
+
+Complex& QueueLst::Top() {
 	if (head_ == nullptr) {
 		throw std::invalid_argument("top of empty queue");
 	}
