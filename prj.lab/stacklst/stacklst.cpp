@@ -5,41 +5,47 @@
 #include "stacklst.hpp"
 
 StackLst::StackLst(const StackLst& other) {
-
-	head_ = new Node;
-	head_->v = other.head_->v;
-	Node* next_element = other.head_;
-	Node* temp = head_;
-
-	while (next_element->next != nullptr) {
-		temp->next = new Node;
-		temp = temp->next;
-		next_element = next_element->next;
-		temp->v = next_element->v;
+	if (other.head_ == nullptr) {
+		head_ = nullptr;
 	}
-	temp->next = nullptr;
+	else {
+		head_ = new Node;
+		head_->v = other.head_->v;
+		Node* next_element = other.head_;
+		Node* temp = head_;
 
-	//next_element = nullptr;
+		while (next_element->next != nullptr) {
+			temp->next = new Node;
+			temp = temp->next;
+			next_element = next_element->next;
+			temp->v = next_element->v;
+		}
+		temp->next = nullptr;
+	}
+
 }
 
 StackLst& StackLst::operator=(const StackLst& other) {
 	(*this).Clear();
-	head_ = new Node;
-	head_->v = other.head_->v;
-	Node* next_element = other.head_;
-	Node* temp = head_;
-
-	while (next_element->next != nullptr) {
-		temp->next = new Node;
-		temp = temp->next;
-		next_element = next_element->next;
-
-		temp->v = next_element->v;
-
+	if (other.head_ == nullptr) {
+		head_ = nullptr;
 	}
-	temp->next = nullptr;
+	else{
+		head_ = new Node;
+		head_->v = other.head_->v;
+		Node* next_element = other.head_;
+		Node* temp = head_;
 
-	// next_element = nullptr;
+		while (next_element->next != nullptr) {
+			temp->next = new Node;
+			temp = temp->next;
+			next_element = next_element->next;
+
+			temp->v = next_element->v;
+
+		}
+		temp->next = nullptr;
+	}
 
 	return *this;
 }

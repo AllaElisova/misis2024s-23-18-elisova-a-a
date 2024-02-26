@@ -4,38 +4,50 @@
 #include "queuelst.hpp"
 
 QueueLst::QueueLst(const QueueLst& other) {
-	head_ = new Node;
-	head_->v = other.head_->v;
-	Node* next_element = other.head_;
-	Node* temp = head_;
-
-	while (next_element->next != nullptr) {
-		temp->next = new Node;
-		temp = temp->next;
-		next_element = next_element->next;
-		temp->v = next_element->v;
+	if (other.head_ == nullptr) {
+		head_ = nullptr;
+		tail_ = nullptr;
 	}
-	tail_ = temp;
-	temp->next = nullptr;
+	else {
+		head_ = new Node;
+		head_->v = other.head_->v;
+		Node* next_element = other.head_;
+		Node* temp = head_;
+
+		while (next_element->next != nullptr) {
+			temp->next = new Node;
+			temp = temp->next;
+			next_element = next_element->next;
+			temp->v = next_element->v;
+		}
+		tail_ = temp;
+		temp->next = nullptr;
+	}
 }
 
 QueueLst& QueueLst::operator=(const QueueLst& other) {
 	(*this).Clear();
-	head_ = new Node;
-	head_->v = other.head_->v;
-	Node* next_element = other.head_;
-	Node* temp = head_;
-
-	while (next_element->next != nullptr) {
-		temp->next = new Node;
-		temp = temp->next;
-		next_element = next_element->next;
-		temp->v = next_element->v;
+	if (other.head_ == nullptr) {
+		head_ = nullptr;
+		tail_ = nullptr;
 	}
-	tail_ = temp;
-	temp->next = nullptr;
+	else {
+		head_ = new Node;
+		head_->v = other.head_->v;
+		Node* next_element = other.head_;
+		Node* temp = head_;
 
-	return (*this);
+		while (next_element->next != nullptr) {
+			temp->next = new Node;
+			temp = temp->next;
+			next_element = next_element->next;
+			temp->v = next_element->v;
+		}
+		tail_ = temp;
+		temp->next = nullptr;
+
+		return (*this);
+	}
 }
 
 void QueueLst::Push(const Complex& complex) {

@@ -17,6 +17,13 @@ TEST_CASE("copy ctor") {
 	u.Push(Complex(3, 4));
 	CHECK_EQ(u.Top(), Complex(1, 2));
 	CHECK_EQ(u.End(), Complex(3, 4));
+
+	QueueLst x;
+	QueueLst y = x;
+	CHECK_EQ(y.IsEmpty(), true);
+	y.Push(z);
+	CHECK_EQ(y.Top(), z);
+	CHECK_EQ(y.End(), z);
 }
 
 TEST_CASE("eq operator") {

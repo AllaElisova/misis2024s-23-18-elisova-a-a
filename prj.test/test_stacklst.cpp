@@ -23,6 +23,11 @@ Complex z3(5, 6);
 TEST_CASE("default ctor") {
 	StackLst s;
   CHECK_EQ(s.IsEmpty(), true);
+
+  StackLst q = s;
+  CHECK_EQ(q.IsEmpty(), true);
+  q.Push(Complex(1, 2));
+  CHECK_EQ(q.Top(), Complex(1, 2));
 }
 
 TEST_CASE("copy ctor") {
@@ -48,6 +53,7 @@ TEST_CASE("copy ctor") {
 
 TEST_CASE("eq operator") {
   StackLst ss;
+  CHECK_THROWS(ss.Top());
   ss.Push(z1);
   ss.Push(z2);
   ss.Push(z3);
@@ -58,6 +64,11 @@ TEST_CASE("eq operator") {
   s.Pop();
   s.Pop();
   CHECK_THROWS(s.Top());
+  CHECK_EQ(ss.Top(), z3);
+
+  StackLst q;
+  q = s;
+  CHECK_EQ(s.IsEmpty(), true);
 }
 
 TEST_CASE("clear") {
@@ -66,5 +77,7 @@ TEST_CASE("clear") {
   s.Push(Complex(9, 0));
   s.Clear();
 
+  CHECK_EQ(s.IsEmpty(), true);
+  s.Pop();
   CHECK_EQ(s.IsEmpty(), true);
 }
