@@ -45,9 +45,8 @@ QueueLst& QueueLst::operator=(const QueueLst& other) {
 		}
 		tail_ = temp;
 		temp->next = nullptr;
-
-		return (*this);
 	}
+		return (*this);
 }
 
 void QueueLst::Push(const Complex& complex) {
