@@ -6,7 +6,6 @@
 #include <cstdlib>
 #include <stdexcept>
 #include <initializer_list>
-#include <memory>
 #include <complex/complex.hpp>
 
 class QueueArr {
@@ -14,7 +13,7 @@ public:
 	QueueArr() = default;
 	QueueArr(const QueueArr& other);
 	QueueArr(const std::initializer_list<Complex> list);
-
+	QueueArr(QueueArr&& other) noexcept;
 
 	QueueArr& operator=(const QueueArr& other);
 
@@ -34,7 +33,6 @@ public:
 	void Clear() noexcept;
 
 
-	void Swap(QueueArr& other);
 
 	~QueueArr() = default;
 

@@ -104,4 +104,9 @@ TEST_CASE("clear") {
 	QueueArr q{ z1, z2, z3, z4 };
 	q.Clear();
 	CHECK_EQ(q.IsEmpty(), true);
+	
+}
+
+TEST_CASE("moving ctor") {
+
 }
