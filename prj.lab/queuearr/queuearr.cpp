@@ -5,73 +5,61 @@
 #include <complex/complex.hpp>
 #include "queuearr.hpp"
 
+QueueArr::QueueArr(const QueueArr& other) {
+	if (other.size_ != 0) {
+		if (data_ == nullptr) {
+			data_ = new Complex[other.capacity_];
+		}
+		capacity_ = other.capacity_;
+		size_ = other.size_;
+		head_ = other.head_;
+		tail_ = other.tail_;
+		std::copy(other.data_, other.data_ + other.capacity_, data_);
+	}
+}
+
 QueueArr::QueueArr(const std::initializer_list<Complex> list) {
 	capacity_ = list.size() * 2;
 	size_ = list.size();
 	data_ = new Complex[size_];
-	head_ = data_;
+	head_ = 0;
 	std::copy(list.begin(), list.end(), data_);
-	tail_ = head_ + size_ - 1;
+	tail_ = size_ - 1;
 }
 
 QueueArr& QueueArr::operator=(const QueueArr& other) {
-	if ((other.head_ != nullptr) && (*this != other)) {
-		capacity_ = other.capacity_;
-		size_ = other.size_;
-
-		std::copy(other.head_, other.tail_, head_);
-		tail_ = head_ + size_ - 1;
-
-		Complex* temp1 = data_;
-		while (temp1 < head_) {
-			(*temp1) = Complex(0, 0);
-			++temp1;
+	if (*this != other) {
+		if (other.size_ != 0) {
+			if (data_ == nullptr) {
+				data_ = new Complex[other.capacity_];
+			}
+			capacity_ = other.capacity_;
+			size_ = other.size_;
+			head_ = other.head_;
+			tail_ = other.tail_;
+			std::copy(other.data_, other.data_ + other.capacity_, data_);
 		}
 
-		Complex* temp2 = head_ + size_;
-		while (temp2 < head_ + capacity_) {
-			(*temp2) = Complex(0, 0);
-			++temp2;
-		}
-	}
-	return *this;
-}
-
-QueueArr QueueArr::operator=(const QueueArr other) {
-	if ((other.head_ != nullptr) && (*this != other)) {
-		capacity_ = other.capacity_;
-		size_ = other.size_;
-		std::copy(other.head_, other.tail_, head_);
-		tail_ = head_ + size_ - 1;
-
-		Complex* temp = head_ + size_;
-
-		while (temp < head_ + capacity_) {
-			(*temp) = Complex(0, 0);
-			++temp;
-		}
-
-		Complex* temp2 = head_ + size_;
-		while (temp2 < head_ + capacity_) {
-			(*temp2) = Complex(0, 0);
-			++temp2;
+		else {
+			(*this).Clear();
 		}
 	}
 	return *this;
 }
 
 bool QueueArr::operator==(const QueueArr& other) {
-	bool equal = true;
-
-	if (capacity_ == other.capacity_) {
+	int count = 0;
+	if (size_ == other.size_) {
 		for (int i = 0; i < size_; ++i) {
-			if (*(data_ + i) != *(other.data_ + i)) {
-				equal = false;
+			if (data_[(head_ + i) % capacity_] != other.data_[(other.head_ + i) % other.capacity_]) {
+				++count;
 			}
 		}
+		return (count == size_);
 	}
-
-	return equal;
+	else {
+		return false;
+	}
 }
 
 bool QueueArr::operator!=(const QueueArr& other) {
@@ -81,54 +69,41 @@ bool QueueArr::operator!=(const QueueArr& other) {
 void QueueArr::Push(const Complex& complex){
 	if ((*this).IsEmpty()) {
 		data_ = new Complex[8];
-		*data_ = complex;
-		head_ = data_;
-		tail_ = data_;
+		data_[0] = complex;
+		head_ = 0;
+		tail_ = 0;
 		size_ = 1;
 		capacity_ = 8;
 	}
 
 	else if (size_ < capacity_) {
-
-		if (tail_ + 1 < data_ + capacity_) {
-			++tail_;
-			(*tail_) = complex;
-		}
-		else {
-			tail_ = tail_ + 1 - capacity_;
-			
-		}
+		tail_ = (tail_ + 1) % capacity_;
 		++size_;
-		(*tail_) = complex;
+		data_[tail_] = complex;
 	}
 
 	else {
-
 		Complex* queue = new Complex[capacity_ * 2];
-		*queue = *head_;
+		*queue = *data_;
 
 		for (int i = 0; i < capacity_; ++i) {
-			if (head_ + i < data_ + capacity_) {
-				queue[i] = *(head_ + i);
-			}
-			else {
-				queue[i] = *(head_ + i - capacity_);
-			}
+			queue[i] = data_[(head_ + i) % capacity_];
 		}
 
 		data_ = queue;
-		head_ = data_;
-		tail_ = data_ + size_ ;
-		*tail_ = complex;
+		head_ = 0;
 		++size_;
+		tail_ = size_ - 1;
+		data_[tail_] = complex;
 		capacity_ *= 2;
 	}
 }
 
 void QueueArr::Pop() noexcept{
-	if (head_ != nullptr) {
-		Complex* temp = data_ + (int(tail_ - 1) % capacity_);
-		tail_ = temp;
+	if (data_ != nullptr) {
+		int temp = (head_ + 1) % capacity_;
+		data_[0] = Complex(0,0);
+		head_ = temp;
 		--size_;
 	}
 }
@@ -138,7 +113,7 @@ const Complex& QueueArr::Top() const{
 		throw std::invalid_argument("top of empty queue");
 	}
 	else {
-		return (*head_);
+		return data_[head_];
 	}
 }
 
@@ -147,7 +122,7 @@ Complex& QueueArr::Top(){
 		throw std::invalid_argument("top of empty queue");
 	}
 	else {
-		return (*head_);
+		return data_[head_];
 	}
 
 }
@@ -157,7 +132,7 @@ const Complex& QueueArr::End() const {
 		throw std::invalid_argument("end of empty queue");
 	}
 	else {
-		return (*tail_);
+		return data_[tail_];
 	}
 }
 
@@ -166,24 +141,21 @@ Complex& QueueArr::End(){
 		throw std::invalid_argument("end of empty queue");
 	}
 	else {
-		return (*tail_);
+		return data_[tail_];
 	}
 }
 
 bool QueueArr::IsEmpty() const noexcept{
-	return (head_ == nullptr);
+	return (size_ == 0);
 }
 
 void QueueArr::Clear() noexcept{
-	while (size_ > 0) {
-		Complex* temp = head_;
-		++head_;
-		delete(temp);
-		--size_;
-	}
+	delete[] data_;
+	data_ = nullptr;
 	capacity_ = 0;
-	head_ = nullptr;
-	tail_ = nullptr;
+	size_ = 0;
+	head_ = -1;
+	tail_ = -1;
 }
 
 /* void QueueArr::Swap(QueueArr& other) {

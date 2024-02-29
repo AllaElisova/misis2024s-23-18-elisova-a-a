@@ -6,18 +6,17 @@
 #include <cstdlib>
 #include <stdexcept>
 #include <initializer_list>
-// #include <memory>
+#include <memory>
 #include <complex/complex.hpp>
 
 class QueueArr {
 public:
 	QueueArr() = default;
-	QueueArr(const QueueArr& other) = default;
+	QueueArr(const QueueArr& other);
 	QueueArr(const std::initializer_list<Complex> list);
 
 
 	QueueArr& operator=(const QueueArr& other);
-	QueueArr operator=(const QueueArr other);
 
 	bool operator==(const QueueArr& other);
 	bool operator!=(const QueueArr& other);
@@ -35,13 +34,13 @@ public:
 	void Clear() noexcept;
 
 
-	//void Swap(QueueArr& other);
+	void Swap(QueueArr& other);
 
 	~QueueArr() = default;
 
 private:
-	Complex* head_ = nullptr;
-	Complex* tail_ = nullptr;
+	int head_ = -1;
+	int tail_ = -1;
 	Complex* data_ = nullptr;
 	size_t size_ = 0;
 	size_t capacity_ = 0;
