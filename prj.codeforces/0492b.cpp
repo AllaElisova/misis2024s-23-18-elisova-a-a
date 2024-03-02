@@ -44,7 +44,7 @@ int main() {
 	if (first > d_answer) {
 		d_answer = double(first);
 	}
-	else if (length - last > d_answer) {
+	if (length - last > d_answer) {
 		d_answer = double(length - last);
 	}
 
