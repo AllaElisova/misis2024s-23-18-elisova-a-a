@@ -9,46 +9,43 @@ int main() {
 	int length = 0;
 	std::cin >> lights >> length;
 
-	std::vector <int> arr(length + 1);
+	std::vector <int> arr(0);
 
 	for (int i = 0; i < lights; ++i) {
 		int a;
 		std::cin >> a;
-		arr.at(a) = 1;
+		arr.push_back (a);
 	}
 
 	int max_answer = 0;
+	std::sort(arr.begin(), arr.end());
 
-	std::vector <int> count(2);
-	count.at(0) = -1;
-	count.at(1) = -1;
+	int first = -1;
+	int last = -1;
 
-	for (int i = 0; i < length + 1; ++i) {
-		if (arr.at(i) == 1) {
-
-			if (count.at(0) != -1) {
-				if (count.at(1) == -1) {
-					max_answer = i - count.at(0);
-					count.at(1) = i;
+	for (int i = 0; i < lights; ++i) {
+			if (first != -1) {
+				if (last == -1) {
+					max_answer = arr.at(i) - first;
+					last = arr.at(i);
 				}
 				else {
-					max_answer = std::max(max_answer, i - count.at(1));
-					count.at(1) = i;
+					max_answer = std::max(max_answer, arr.at(i) - last);
+					last = arr.at(i);
 				}
 			}
 			else {
-				count.at(0) = i;
+				first = arr.at(i);
 			}
 		}
-	}
 
 	double d_answer = double(max_answer) / 2.0;
 
-	if (count.at(0) > d_answer) {
-		d_answer = double(count.at(0));
+	if (first > d_answer) {
+		d_answer = double(first);
 	}
-	else if (length - count.at(1) > d_answer) {
-		d_answer = double(length - count.at(1));
+	else if (length - last > d_answer) {
+		d_answer = double(length - last);
 	}
 
 	std::cout << d_answer << std::endl;
