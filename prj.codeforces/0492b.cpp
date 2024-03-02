@@ -18,16 +18,26 @@ int main() {
 	}
 
 	int max_answer = 0;
-	std::vector <int> count(0);
+
+	std::vector <int> count(2);
+	count.at(0) = -1;
+	count.at(1) = -1;
 
 	for (int i = 0; i < length + 1; ++i) {
 		if (arr.at(i) == 1) {
-			if (count.size() != 0) {
-				max_answer = std::max(i - count.at(count.size() - 1), max_answer);
-				count.push_back(i);
+
+			if (count.at(0) != -1) {
+				if (count.at(1) == -1) {
+					max_answer = i - count.at(0);
+					count.at(1) = i;
+				}
+				else {
+					max_answer = std::max(max_answer, i - count.at(1));
+					count.at(1) = i;
+				}
 			}
 			else {
-				count.push_back(i);
+				count.at(0) = i;
 			}
 		}
 	}
@@ -37,8 +47,8 @@ int main() {
 	if (count.at(0) > d_answer) {
 		d_answer = double(count.at(0));
 	}
-	else if (length - count.at(lights - 1) > d_answer) {
-		d_answer = double(length - count.at(lights - 1));
+	else if (length - count.at(1) > d_answer) {
+		d_answer = double(length - count.at(1));
 	}
 
 	std::cout << d_answer << std::endl;
