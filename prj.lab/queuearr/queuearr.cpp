@@ -69,6 +69,17 @@ QueueArr& QueueArr::operator=(QueueArr&& other){
 	return *this;
 }
 
+QueueArr& QueueArr::operator=(const std::initializer_list <Complex> list) {
+	capacity_ = list.size() * 2;
+	size_ = list.size();
+	data_ = new Complex[size_];
+	head_ = 0;
+	std::copy(list.begin(), list.end(), data_);
+	tail_ = size_ - 1;
+
+	return *this;
+}
+
 bool QueueArr::operator==(const QueueArr& other) {
 	int count = 0;
 	if (size_ == other.size_) {

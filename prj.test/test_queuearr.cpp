@@ -23,6 +23,9 @@ TEST_CASE("init list ctor") {
 
 TEST_CASE("eq operator") {
 	Complex z1 = Complex(1, 2);
+	Complex z2 = Complex(2, 3);
+	Complex z3 = Complex(3, 4);
+
 	QueueArr q{ z1 };
 	QueueArr r;
 	r = q;
@@ -35,6 +38,12 @@ TEST_CASE("eq operator") {
 	QueueArr empty2;
 	empty1 = empty2;
 	CHECK_EQ(empty1.IsEmpty(), true);
+
+	QueueArr t = { z1, z2, z3 };
+	CHECK_EQ(t.IsEmpty(), false);
+	CHECK_EQ(t.Top(), z1);
+	CHECK_EQ(t.End(), z3);
+
 }
 
 TEST_CASE("push") {
