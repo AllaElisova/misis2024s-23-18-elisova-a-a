@@ -12,9 +12,11 @@ class StackArr {
 public:
 	StackArr() = default;
 	StackArr(const StackArr& other);
+	StackArr(StackArr&& other) = default;
 	StackArr(const std::initializer_list<Complex>& list);
 
 	StackArr& operator=(const StackArr& other);
+	StackArr& operator=(StackArr&& other) = default;
 	StackArr& operator=(const std::initializer_list<Complex>& list);
 
 	void Push(const Complex& complex);

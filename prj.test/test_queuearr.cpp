@@ -30,6 +30,11 @@ TEST_CASE("eq operator") {
 	CHECK_EQ(q.Top(), z1);
 	CHECK_EQ(r.Top(), z1);
 	CHECK_EQ(r.End(), z1);
+
+	QueueArr empty1;
+	QueueArr empty2;
+	empty1 = empty2;
+	CHECK_EQ(empty1.IsEmpty(), true);
 }
 
 TEST_CASE("push") {
@@ -92,6 +97,8 @@ TEST_CASE("pop") {
 	q.Push(z10);
 	q.Push(z11);
 	CHECK_EQ(q.End(), z11);
+	q.Pop();
+	q.Pop();
 	q.Push(z12);
 	CHECK_EQ(q.End(), z12);
 }
