@@ -25,11 +25,7 @@ QueueArr::QueueArr(QueueArr&& other) noexcept {
 	head_ = other.head_;
 	tail_ = other.tail_;
 
-	other.capacity_ = 0;
-	other.size_ = 0;
 	other.data_ = nullptr;
-	other.head_ = 0;
-	other.tail_ = 0;
 }
 
 QueueArr::QueueArr(const std::initializer_list<Complex> list) {
@@ -57,6 +53,18 @@ QueueArr& QueueArr::operator=(const QueueArr& other) {
 		else {
 			(*this).Clear();
 		}
+	}
+	return *this;
+}
+
+QueueArr& QueueArr::operator=(QueueArr&& other){
+	if (*this != other) {
+			capacity_ = other.capacity_;
+			size_ = other.size_;
+			head_ = other.head_;
+			tail_ = other.tail_;
+			data_ = other.data_;
+			other.data_ = nullptr;
 	}
 	return *this;
 }

@@ -16,6 +16,7 @@ public:
 	QueueArr(QueueArr&& other) noexcept;
 
 	QueueArr& operator=(const QueueArr& other);
+	QueueArr& operator=(QueueArr&& other);
 
 	bool operator==(const QueueArr& other);
 	bool operator!=(const QueueArr& other);
