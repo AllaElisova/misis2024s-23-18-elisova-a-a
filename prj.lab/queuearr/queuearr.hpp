@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <stdexcept>
 #include <initializer_list>
+#include <memory>
 #include <complex/complex.hpp>
 
 class QueueArr {
@@ -39,9 +40,9 @@ public:
 	~QueueArr() = default;
 
 private:
-	int head_ = -1;
-	int tail_ = -1;
-	Complex* data_ = nullptr;
+	std::ptrdiff_t head_ = -1;
+	std::ptrdiff_t tail_ = -1;
+	std::unique_ptr <Complex[]> data_ = nullptr;
 	size_t size_ = 0;
 	size_t capacity_ = 0;
 };
