@@ -6,6 +6,7 @@
 #include <initializer_list>
 #include <cstdlib>
 #include <stdexcept>
+#include <memory>
 #include <complex/complex.hpp>
 
 class StackArr {
@@ -30,9 +31,12 @@ public:
 
 private:
 	size_t size_ = 0;
-	int32_t elems_ = 0;
-	Complex* data_ = nullptr;
-	Complex* head_ = 0;
+	int32_t capacity_ = 0;
+	//Complex* data_ = nullptr;
+	//Complex* head_ = 0;
+
+	std::unique_ptr<Complex[]> data_ = nullptr;
+	std::ptrdiff_t head_ = -1;
 };
 
 #endif
