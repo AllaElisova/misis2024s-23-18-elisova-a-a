@@ -8,23 +8,20 @@
 
 QueueArr::QueueArr(const QueueArr& other) {
 	if (other.size_ != 0) {
-		if (data_ == nullptr) {
-			data_ = std::make_unique<Complex[]> (other.size_);
-		}
+
+		data_ = std::make_unique<Complex[]> (other.size_);
 		capacity_ = other.capacity_;
 		size_ = other.size_;
-		head_ = 0;
-		tail_ = 0;
+		
+		int counter = 0;
 
 		while (tail_ < other.size_) {
-			data_[tail_] = other.data_[tail_];
-			++tail_;
+			data_[counter] = other.data_[counter];
+			++counter;
 		}
 
 		head_ = other.head_;
 		tail_ = other.tail_;
-		//std::copy(other.data_, other.data_ + other.capacity_, data_);
-
 	}
 }
 
@@ -32,7 +29,6 @@ QueueArr::QueueArr(QueueArr&& other) noexcept {
 	capacity_ = other.capacity_;
 	size_ = other.size_;
 	std::swap(data_, other.data_);
-	// data_ = other.data_;
 	head_ = other.head_;
 	tail_ = other.tail_;
 }
@@ -63,13 +59,14 @@ QueueArr& QueueArr::operator=(const QueueArr& other) {
 
 			capacity_ = other.capacity_;
 			size_ = other.size_;
-			head_ = 0;
-			tail_ = 0;
-			// std::copy(other.data_, other.data_ + other.capacity_, data_);
-			while (tail_ < capacity_) {
-				data_[tail_] = other.data_[tail_];
-				++tail_;
+			
+			int counter = 0;
+
+			while (counter < capacity_) {
+				data_[counter] = other.data_[counter];
+				++counter;
 			}
+
 			head_ = other.head_;
 			tail_ = other.tail_;
 		}
@@ -87,8 +84,6 @@ QueueArr& QueueArr::operator=(QueueArr&& other){
 			size_ = other.size_;
 			head_ = other.head_;
 			tail_ = other.tail_;
-			//data_ = other.data_;
-			//other.data_ = nullptr;
 			std::swap(data_, other.data_);
 	}
 	return *this;
@@ -102,8 +97,8 @@ QueueArr& QueueArr::operator=(const std::initializer_list <Complex> list) {
 
 	if (list.size() != 0) {
 		data_ = std::make_unique<Complex[]>(list.size());
-
 		head_ = 0;
+
 		for (Complex element : list) {
 			++tail_;
 			data_[tail_] = element;

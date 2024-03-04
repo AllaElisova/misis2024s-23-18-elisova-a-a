@@ -95,6 +95,9 @@ TEST_CASE("pop") {
 	Complex z10 = Complex(10, 11);
 	Complex z11 = Complex(11, 12);
 	Complex z12 = Complex(12, 13);
+	Complex z13 = Complex(13, 14);
+	Complex z14 = Complex(14, 15);
+	Complex z15 = Complex(15, 16);
 
 	QueueArr q;
 	q.Push(z1);
@@ -117,6 +120,10 @@ TEST_CASE("pop") {
 	q.Pop();
 	q.Push(z12);
 	CHECK_EQ(q.End(), z12);
+	q.Push(z13);
+	q.Push(z14);
+	q.Push(z15);
+	CHECK_EQ(q.End(), z15);
 }
 
 TEST_CASE("clear") {
