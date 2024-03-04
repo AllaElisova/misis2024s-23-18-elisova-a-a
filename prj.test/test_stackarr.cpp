@@ -89,7 +89,13 @@ TEST_CASE("eq operator") {
   k.Pop();
   CHECK_EQ(k.Top(), z2);
   k.Pop();
+  k.Pop();
+  k.Pop();
   CHECK_EQ(k.IsEmpty(), true);
+  
+  StackArr sss;
+  StackArr ssss = sss;
+  CHECK_EQ(ssss.IsEmpty(), true);
 }
 
 TEST_CASE("is empty") {
@@ -104,3 +110,13 @@ TEST_CASE("is empty") {
   CHECK_EQ(s.IsEmpty(), true);
   CHECK_THROWS(s.Top());
 } 
+
+TEST_CASE("clear") {
+  StackArr s;
+  s.Push(z1);
+  s.Push(z2);
+  s.Push(z3);
+  s.Clear();
+  CHECK_EQ(s.IsEmpty(), true);
+  CHECK_THROWS(s.Top());
+}
