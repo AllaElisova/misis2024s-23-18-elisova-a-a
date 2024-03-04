@@ -213,7 +213,6 @@ bool QueueArr::IsEmpty() const noexcept{
 
 void QueueArr::Clear() noexcept{
 	data_.reset();
-	data_ = nullptr;
 	capacity_ = 0;
 	size_ = 0;
 	head_ = -1;
