@@ -1,7 +1,6 @@
 #include <initializer_list>
 #include <cstdlib>
 #include <stdexcept>
-#include <algorithm>
 #include <memory>
 #include "stackarr.hpp"
 #include <complex/complex.hpp>
@@ -9,9 +8,8 @@
 StackArr::StackArr(const StackArr& other) {
 	size_ = other.size_;
 	capacity_ = other.capacity_;
-	//data_ = new Complex[size_];
+
 	data_ = std::make_unique<Complex[]>(capacity_);
-	//std::copy(other.data_, other.data_ + other.size_, data_);
 	int counter = 0;
 
 	while (counter < capacity_) {
@@ -31,18 +29,14 @@ StackArr::StackArr(const std::initializer_list<Complex>& list){
 		++head_;
 		data_[head_] = element;
 	}
-
-	//head_ = data_ + elems_ - 1;
 }
 
 StackArr& StackArr::operator=(const StackArr& other) {
 	data_.reset();
 	size_ = other.size_;
 	capacity_ = other.capacity_;
-	//data_ = new Complex[size_];
 	data_ = std::make_unique<Complex[]>(capacity_);
 	
-	//std::copy(other.data_, other.data_ + other.size_, data_);
 	int counter = 0;
 
 	while (counter < capacity_) {
@@ -56,13 +50,11 @@ StackArr& StackArr::operator=(const StackArr& other) {
 }
 
 StackArr& StackArr::operator=(const std::initializer_list <Complex>& list){
-	//delete[] data_;
+
 	data_.reset();
 	capacity_ = list.size() * 2;
 	size_ = list.size();
-	//data_ = new Complex[size_];
 	data_ = std::make_unique<Complex[]>(capacity_);
-	//std::copy(list.begin(), list.end(), data_);
 
 	for (Complex element : list) {
 		++head_;
@@ -75,7 +67,6 @@ StackArr& StackArr::operator=(const std::initializer_list <Complex>& list){
 void StackArr::Push(const Complex& complex) {
 
 	if (size_ == 0) {
-		//data_ = new Complex[8];
 		data_ = std::make_unique<Complex[]>(8);
 		data_[0] = complex;
 		capacity_ = 8;
@@ -83,9 +74,6 @@ void StackArr::Push(const Complex& complex) {
 	}
 
 	else if (head_ + 1 > capacity_) {
-
-		//x = new Complex[size_ * 2];
-		//std::copy(data_, data_ + size_, x);
 
 		auto x = std::make_unique<Complex[]>(size_ * 2);
 		
@@ -98,11 +86,6 @@ void StackArr::Push(const Complex& complex) {
 
 		x[capacity_] = complex;
 		capacity_ *= 2;
-		//std::copy(x, x + size_, data_);
-		//delete[] x;
-
-		counter = 0;
-
 		std::swap(data_, x);
 		
 	}
@@ -119,7 +102,7 @@ void StackArr::Pop() noexcept {
 	if (size_ > 0) {
 		data_[head_] = Complex(0, 0);
 		--size_;
-		head_ = size_ - 1;
+		--head_;
 	}
 }
 

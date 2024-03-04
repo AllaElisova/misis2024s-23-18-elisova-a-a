@@ -80,6 +80,16 @@ TEST_CASE("eq operator") {
   CHECK_EQ(z1, s.Top());
 
   CHECK_EQ(z3, ss.Top());
+
+  StackArr k;
+  k.Push(z1);
+
+  k = { z2, z3 };
+  CHECK_EQ(k.Top(), z3);
+  k.Pop();
+  CHECK_EQ(k.Top(), z2);
+  k.Pop();
+  CHECK_EQ(k.IsEmpty(), true);
 }
 
 TEST_CASE("is empty") {
