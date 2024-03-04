@@ -134,7 +134,10 @@ TEST_CASE("clear") {
 	QueueArr q{ z1, z2, z3, z4 };
 	q.Clear();
 	CHECK_EQ(q.IsEmpty(), true);
-	
+	q.Pop();
+	q.Pop();
+	CHECK_THROWS(q.Top());
+	CHECK_THROWS(q.End());
 }
 
 TEST_CASE("moving ctor") {
