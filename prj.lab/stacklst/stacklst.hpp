@@ -22,7 +22,7 @@ public:
 	Complex& Top();
 	void Clear() noexcept;
 
-	~StackLst() = default;
+	~StackLst();
 
 private:
 	struct Node {

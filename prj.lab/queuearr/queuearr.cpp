@@ -219,3 +219,6 @@ void QueueArr::Clear() noexcept{
 	tail_ = -1;
 }
 
+QueueArr::~QueueArr() {
+	(*this).Clear();
+}

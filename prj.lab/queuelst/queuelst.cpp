@@ -130,4 +130,8 @@ void QueueLst::Clear() noexcept {
 	tail_ = nullptr;
 }
 
+QueueLst::~QueueLst() {
+	(*this).Clear();
+}
+
 

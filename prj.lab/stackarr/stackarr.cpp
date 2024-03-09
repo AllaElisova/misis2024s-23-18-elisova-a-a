@@ -136,5 +136,5 @@ void StackArr::Clear() noexcept {
 }
 
 StackArr::~StackArr() {
-	data_.reset();
+	(*this).Clear();
 }

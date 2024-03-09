@@ -1,37 +1,49 @@
-/* #pragma once
+#pragma once
 
 #ifndef QUEUELSTPR_QUEUELSTPR_HPP
 #define QUEUELSTPR_QUEUELSTPR_HPP
 
+#include <stdexcept>
+#include <initializer_list>
+
 class QueueLstPr {
 public:
-	QueueLstPr() = default;
-	QueueLstPr(const QueueLstPr& other);
-	QueueLstPr(QueueLstPr&& other);
+	 QueueLstPr() = default;
+	 QueueLstPr(const QueueLstPr& other);
+	 QueueLstPr(QueueLstPr&& other);
+	 QueueLstPr(const std::initializer_list<float>& list);
 
-	QueueLstPr& operator= (const QueueLstPr& other);
-	QueueLstPr& operator= (QueueLstPr&& other);
+	 QueueLstPr& operator= (const QueueLstPr& other);
+	 QueueLstPr& operator= (QueueLstPr&& other);
+	 QueueLstPr& operator= (const std::initializer_list<float> list);
 
-	void Push();
-	void Pop() noexcept;
+	 bool IsEmpty() const noexcept;
 
-	int& Top();
-	const int& Top() const;
+	 void Push(const float& elem);
+	 void Pop() noexcept;
 
-	int& End();
-	const int& End() const;
+	 float& Top();
+	 const float& Top() const;
 
-	void Clear() noexcept;
+	 float& End();
+	 const float& End() const;
+
+	 void Clear() noexcept;
+
+	 ~QueueLstPr();
 
 private:
-	struct Node {
-		int v;
-		Node* next = nullptr;
+  struct Node {
+		float value = 0;
+		Node* prev_ = nullptr;
+		Node* next_ = nullptr;
+		size_t count = 0;
 
 	};
 
+	//void copy_node(Node* cur_node, const Node* other_node) noexcept;
 	Node* head_ = nullptr;
 	Node* tail_ = nullptr;
 };
 
-#endif */
+#endif 

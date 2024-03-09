@@ -37,7 +37,7 @@ public:
 
 
 
-	~QueueArr() = default;
+	~QueueArr();
 
 private:
 	std::ptrdiff_t head_ = -1;

@@ -22,7 +22,7 @@ public:
 	bool IsEmpty() const noexcept;
 	void Clear() noexcept;
 
-	~QueueLst() = default;
+	~QueueLst();
 
 private:
 	struct Node {

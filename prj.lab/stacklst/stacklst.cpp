@@ -103,3 +103,7 @@ void StackLst::Clear() noexcept {
 		}
 	}
 }
+
+StackLst::~StackLst() {
+	(*this).Clear();
+}
