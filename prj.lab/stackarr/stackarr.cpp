@@ -20,7 +20,7 @@ StackArr::StackArr(const StackArr& other) {
 	head_ = size_ - 1;
 }
 
-StackArr::StackArr(StackArr&& other) {
+StackArr::StackArr(StackArr&& other) noexcept {
 	std::swap(data_, other.data_);
 	std::swap(size_, other.size_);
 	std::swap(head_, other.head_);
@@ -56,12 +56,13 @@ StackArr& StackArr::operator=(const StackArr& other) {
 	return *this;
 }
 
-StackArr& StackArr::operator=(StackArr&& other) {
-	std::swap(data_, other.data_);
-	std::swap(size_, other.size_);
-	std::swap(capacity_, other.capacity_);
-	std::swap(head_, other.head_);
-
+StackArr& StackArr::operator=(StackArr&& other) noexcept {
+	if (this != &other) {
+		std::swap(data_, other.data_);
+		std::swap(size_, other.size_);
+		std::swap(capacity_, other.capacity_);
+		std::swap(head_, other.head_);
+	}
 	return *this;
 }
 
