@@ -30,7 +30,6 @@ int main() {
 #include <stackarr/stackarr.hpp>
 #include <complex/complex.hpp>
 #include "doctest.h"
-#include <fstream>
 
 Complex z1 (1, 2);
 Complex z2 (3, 4);
@@ -49,6 +48,10 @@ TEST_CASE("initializer list ctor") {
   CHECK_EQ(z2, s.Top());
   s.Pop();
   CHECK_EQ(z1, s.Top());
+
+  StackArr q{};
+  CHECK_EQ(q.IsEmpty(), true);
+  CHECK_THROWS(q.Top());
 }
 
 TEST_CASE("copy ctor") {
@@ -96,6 +99,7 @@ TEST_CASE("eq operator") {
   StackArr sss;
   StackArr ssss = sss;
   CHECK_EQ(ssss.IsEmpty(), true);
+
 }
 
 TEST_CASE("is empty") {
@@ -106,7 +110,6 @@ TEST_CASE("is empty") {
   CHECK_EQ(z1, s.Top());
   CHECK_EQ(s.IsEmpty(), false);
   s.Pop();
-
   CHECK_EQ(s.IsEmpty(), true);
   CHECK_THROWS(s.Top());
 } 
@@ -119,4 +122,30 @@ TEST_CASE("clear") {
   s.Clear();
   CHECK_EQ(s.IsEmpty(), true);
   CHECK_THROWS(s.Top());
+}
+
+TEST_CASE("push / pop") {
+  StackArr s;
+  s.Push(Complex(1, 2));
+  s.Push(Complex(2, 3));
+  s.Push(Complex(3, 4));
+  s.Push(Complex(4, 5));
+  s.Push(Complex(1, 2));
+  s.Push(Complex(2, 3));
+  s.Push(Complex(3, 4));
+  s.Push(Complex(4, 5));
+  s.Push(Complex(1, 2));
+  s.Push(Complex(2, 3));
+  s.Push(Complex(3, 4));
+  s.Push(Complex(4, 5));
+  s.Push(Complex(1, 2));
+  s.Push(Complex(2, 3));
+  s.Push(Complex(3, 4));
+  s.Push(Complex(4, 5));
+
+  Complex z3{ 3, 4 };
+  Complex z4{ 4, 5 };
+  CHECK_EQ(s.Top(), z4);
+  s.Pop();
+  CHECK_EQ(s.Top(), z3);
 }

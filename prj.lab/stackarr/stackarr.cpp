@@ -70,12 +70,12 @@ void StackArr::Push(const Complex& complex) {
 		data_ = std::make_unique<Complex[]>(8);
 		data_[0] = complex;
 		capacity_ = 8;
-		
+		size_ = 1;
 	}
 
-	else if (head_ + 1 > capacity_) {
+	else if (head_ + 1 >= capacity_) {
 
-		auto x = std::make_unique<Complex[]>(size_ * 2);
+		auto x = std::make_unique<Complex[]>(capacity_ * 2);
 		
 		int counter = 0;
 
@@ -84,23 +84,25 @@ void StackArr::Push(const Complex& complex) {
 			++counter;
 		}
 
-		x[capacity_] = complex;
+		x[size_] = complex;
+		++size_;
 		capacity_ *= 2;
 		std::swap(data_, x);
 		
 	}
 	else {
 		data_[size_] = complex;
+		++size_;
 	}
 	
-	head_ = size_;
-	++size_;
+	head_ = size_ - 1;
 }
 
 void StackArr::Pop() noexcept {
 
 	if (size_ > 0) {
-		data_[head_] = Complex(0, 0);
+		auto x = std::make_unique<Complex>(data_[head_]);
+		x.reset();
 		--size_;
 		--head_;
 	}
