@@ -13,11 +13,11 @@ class StackArr {
 public:
 	StackArr() = default;
 	StackArr(const StackArr& other);
-	StackArr(StackArr&& other) = default;
+	StackArr(StackArr&& other);
 	StackArr(const std::initializer_list<Complex>& list);
 
 	StackArr& operator=(const StackArr& other);
-	StackArr& operator=(StackArr&& other) = default;
+	StackArr& operator=(StackArr&& other);
 	StackArr& operator=(const std::initializer_list<Complex>& list);
 
 	void Push(const Complex& complex);
@@ -32,9 +32,6 @@ public:
 private:
 	size_t size_ = 0;
 	int32_t capacity_ = 0;
-	//Complex* data_ = nullptr;
-	//Complex* head_ = 0;
-
 	std::unique_ptr<Complex[]> data_ = nullptr;
 	std::ptrdiff_t head_ = -1;
 };

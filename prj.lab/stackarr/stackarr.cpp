@@ -20,6 +20,13 @@ StackArr::StackArr(const StackArr& other) {
 	head_ = size_ - 1;
 }
 
+StackArr::StackArr(StackArr&& other) {
+	std::swap(data_, other.data_);
+	std::swap(size_, other.size_);
+	std::swap(head_, other.head_);
+	std::swap(capacity_, other.capacity_);
+}
+
 StackArr::StackArr(const std::initializer_list<Complex>& list){
 	capacity_ = list.size() * 2;
 	size_ = list.size();
@@ -45,6 +52,15 @@ StackArr& StackArr::operator=(const StackArr& other) {
 	}
 
 	head_ = size_ - 1;
+
+	return *this;
+}
+
+StackArr& StackArr::operator=(StackArr&& other) {
+	std::swap(data_, other.data_);
+	std::swap(size_, other.size_);
+	std::swap(capacity_, other.capacity_);
+	std::swap(head_, other.head_);
 
 	return *this;
 }
