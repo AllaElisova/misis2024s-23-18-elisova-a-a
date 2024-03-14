@@ -8,8 +8,6 @@
 #include <fstream>
 
 QueueArr::QueueArr(const QueueArr& other) {
-	if (other.size_ != 0) {
-
 		capacity_ = other.capacity_;
 		size_ = other.size_;
 		data_ = std::make_unique<Complex[]> (capacity_);
@@ -23,7 +21,7 @@ QueueArr::QueueArr(const QueueArr& other) {
 
 		head_ = other.head_;
 		tail_ = other.tail_;
-	}
+
 }
 
 QueueArr::QueueArr(QueueArr&& other) noexcept {

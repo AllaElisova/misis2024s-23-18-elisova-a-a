@@ -1,26 +1,25 @@
-/*#include "queuelstpr.hpp"
-
+#include "queuelstpr.hpp"
+/*
 QueueLstPr::QueueLstPr(const QueueLstPr& other) {
-	if (other.head_ == nullptr) {
-		head_ = nullptr;
-		tail_ = nullptr;
+	if (other.root_ == nullptr) {
+		root_ = nullptr;
+
 	}
 
 	else {
-		head_ = new Node;
-		head_->value = other.head_->value;
+	
+		Node* root_temp = other.root_;
+	
+		root_ = other.root_
+		Node* temp = other.root_->left_;
 
-		Node* next_elem = other.head_;
-		Node* temp = head_;
-
-
-		while (next_elem->next_ != nullptr) {
-			temp->next_ = new Node;
-			next_elem = next_elem->next_;
+		while (temp->right_ != nullptr) {
+			temp->right_ = new Node;
+			next_elem = next_elem->right_;
 			temp->value = next_elem->value;
 		}
-		tail_ = temp;
-		temp->next_ = nullptr;
+
+		temp->right_ = nullptr;
 	}
 }
 
@@ -134,5 +133,23 @@ QueueLstPr::~QueueLstPr() {
 	(*this).Clear();
 }
 
+void QueueLstPr::copy_node(Node* cur_node, const Node* other_node) noexcept {
+	if (other_node != nullptr) {
 
-*/
+		if (cur_node == nullptr) {
+			cur_node = new Node;
+			cur_node->value_ = other_node->value_;
+		}
+
+		if (other_node->left_ != nullptr) {
+			cur_node->left_ = new Node;
+			cur_node->value_ = other_node->left_->value_;
+			copy_node(cur_node->left_, other_node->left_);
+		}
+		if (other_node->right_ != nullptr) {
+			cur_node->right_ = new Node;
+			cur_node->value_ = other_node->right_->value_;
+			copy_node(cur_node->right_, other_node->right_);
+		}
+	}
+} */

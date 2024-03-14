@@ -34,16 +34,15 @@ public:
 
 private:
   struct Node {
-		float value = 0;
-		Node* prev_ = nullptr;
-		Node* next_ = nullptr;
-		size_t count = 0;
+		float value_ = 0;
+		Node* left_ = nullptr;
+		Node* right_ = nullptr;
+		size_t count_ = 0;
 
 	};
 
-	//void copy_node(Node* cur_node, const Node* other_node) noexcept;
-	Node* head_ = nullptr;
-	Node* tail_ = nullptr;
+	void copy_node(Node* cur_node, const Node* other_node) noexcept;
+	Node* root_ = nullptr;
 };
 
 #endif 

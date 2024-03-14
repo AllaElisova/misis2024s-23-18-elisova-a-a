@@ -25,30 +25,58 @@ StackLst::StackLst(const StackLst& other) {
 
 }
 
-StackLst& StackLst::operator=(const StackLst& other) {
-	(*this).Clear();
+
+StackLst::StackLst(StackLst&& other) noexcept {
 	if (other.head_ == nullptr) {
 		head_ = nullptr;
 	}
-	else{
+	else {
 		head_ = new Node;
-		head_->v = other.head_->v;
-		Node* next_element = other.head_;
-		Node* temp = head_;
-
-		while (next_element->next != nullptr) {
-			temp->next = new Node;
-			temp = temp->next;
-			next_element = next_element->next;
-
-			temp->v = next_element->v;
-
-		}
-		temp->next = nullptr;
+		std::swap(head_, other.head_);
 	}
 
+}
+
+StackLst& StackLst::operator=(const StackLst& other) {
+	if (head_ != other.head_) {
+		(*this).Clear();
+		if (other.head_ == nullptr) {
+			head_ = nullptr;
+		}
+		else {
+			head_ = new Node;
+			head_->v = other.head_->v;
+			Node* next_element = other.head_;
+			Node* temp = head_;
+
+			while (next_element->next != nullptr) {
+				temp->next = new Node;
+				temp = temp->next;
+				next_element = next_element->next;
+
+				temp->v = next_element->v;
+
+			}
+			temp->next = nullptr;
+		}
+	}
+	return *this;
+
+}
+
+StackLst& StackLst::operator=(StackLst&& other) noexcept {
+	if (head_ != other.head_) {
+		if (other.head_ == nullptr) {
+			head_ = nullptr;
+		}
+		else {
+			head_ = new Node;
+			std::swap(head_, other.head_);
+		}
+	}
 	return *this;
 }
+
 
 void StackLst::Push(const Complex& complex) {
 		Node* new_element = new Node;
