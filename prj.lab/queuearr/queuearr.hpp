@@ -8,20 +8,18 @@
 #include <initializer_list>
 #include <memory>
 #include <complex/complex.hpp>
+#include <fstream>
 
 class QueueArr {
 public:
 	QueueArr() = default;
 	QueueArr(const QueueArr& other);
 	QueueArr(QueueArr&& other) noexcept;
-	QueueArr(const std::initializer_list <Complex> list);
+	QueueArr(const std::initializer_list <Complex>& list);
 
 	QueueArr& operator=(const QueueArr& other);
-	QueueArr& operator=(QueueArr&& other);
-	QueueArr& operator=(const std::initializer_list <Complex> list);
-
-	bool operator==(const QueueArr& other);
-	bool operator!=(const QueueArr& other);
+	QueueArr& operator=(QueueArr&& other) noexcept;
+	QueueArr& operator=(const std::initializer_list <Complex>& list);
 
 
 	void Push(const Complex& complex);
@@ -34,7 +32,6 @@ public:
 
 	bool IsEmpty() const noexcept;
 	void Clear() noexcept;
-
 
 
 	~QueueArr();

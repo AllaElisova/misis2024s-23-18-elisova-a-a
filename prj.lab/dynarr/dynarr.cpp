@@ -1,4 +1,5 @@
 #include "dynarr.hpp"
+#include <stdexcept>
 
 DynArr::DynArr(const int32_t size) {
 	Resize(size);
@@ -6,16 +7,16 @@ DynArr::DynArr(const int32_t size) {
 
 float& DynArr::operator[](const int32_t index) {
 	if (index >= size_ || index < 0) {
-		throw ForbiddenIndex();
+		throw std::invalid_argument ("wrong index");
 	}
-	return *(data_ + index);
+	return data_[index];
 }
 
 const float& DynArr::operator[](const int32_t index) const {
 	if (index >= size_ || index < 0) {
-		throw ForbiddenIndex();
+		throw std::invalid_argument("wrong index");
 	}
-	return *(data_ + index);
+	return data_[index];
 }
 
 DynArr::DynArr(const DynArr& other) {
@@ -25,23 +26,48 @@ DynArr::DynArr(const DynArr& other) {
 	}
 }
 
+DynArr::DynArr(DynArr&& other) noexcept {
+	std::swap(data_, other.data_);
+	std::swap(size_, other.size_);
+	std::swap(capacity_, other.capacity_);
+
+}
+
+
 DynArr::~DynArr() {
-	delete[] data_;
-	data_ = nullptr;
+	data_.reset();
+	size_ = 0;
+	capacity_ = 0;
 }
 
 
 DynArr& DynArr::operator=(const DynArr& other) {
-	Resize(other.Size());
-	for (int i = 0; i < size_; ++i) {
-		(*this)[i] = other[i];
+
+	if (data_ != other.data_) {
+
+		Resize(other.Size());
+
+		for (int i = 0; i < size_; ++i) {
+			(*this)[i] = other[i];
+		}
 	}
 	return *this;
 }
 
+DynArr& DynArr::operator=(DynArr&& other) noexcept {
+
+	if (data_ != other.data_) {
+		std::swap(data_, other.data_);
+		std::swap(size_, other.size_);
+		std::swap(capacity_, other.capacity_);
+
+		return *this;
+	}
+}
+
 void DynArr::Resize(const int32_t new_size) {
 	if (new_size <= 0) {
-		throw ForbiddenSize();
+		throw std::invalid_argument("forbidden size");
 	}
 	if (new_size < size_) {
 		size_ = new_size;
@@ -54,16 +80,18 @@ void DynArr::Resize(const int32_t new_size) {
 		}
 	}
 	else {
-		float* new_data = new float[new_size];
+
+		auto new_data = std::make_unique<float[]> (new_size);
+
 		for (int i = 0; i < size_; ++i) {
-			*(new_data + i) = (*this)[i];
+			new_data [i] = (*this)[i];
 		}
 		for (int i = size_; i < new_size; ++i) {
-			*(new_data + i) = 0;
+			new_data[i] = 0;
 		}
 
-		delete[] data_;
-		data_ = new_data;
+		data_.reset();
+		std::swap(data_, new_data);
 		size_ = new_size;
 		capacity_ = new_size;
 	}

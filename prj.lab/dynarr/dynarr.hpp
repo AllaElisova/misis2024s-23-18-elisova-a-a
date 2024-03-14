@@ -3,7 +3,8 @@
 #ifndef DYNARR_HPP
 #define DYNARR_HPP
 
-#include <iostream>
+#include <memory>
+
 
 class DynArr {
 public:
@@ -14,9 +15,11 @@ public:
 
   DynArr(const int32_t size);
   DynArr(const DynArr& other);
+  DynArr(DynArr&& other) noexcept;
   ~DynArr();
 
   DynArr& operator=(const DynArr& other);
+  DynArr& operator=(DynArr&& other) noexcept;
   void Resize(const int32_t new_size);
 
   bool Empty() const;
@@ -28,14 +31,8 @@ public:
 private:
   int32_t size_{ 0 };
   int32_t capacity_{ 0 };
-  float* data_ = nullptr;
+  std::unique_ptr <float[]> data_ = nullptr;
 };
 
-struct ForbiddenIndex {
-  ForbiddenIndex() = default;
-};
 
-struct ForbiddenSize {
-  ForbiddenSize() = default;
-};
 #endif

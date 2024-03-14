@@ -5,6 +5,7 @@
 #include <memory>
 #include <complex/complex.hpp>
 #include "queuearr.hpp"
+#include <fstream>
 
 QueueArr::QueueArr(const QueueArr& other) {
 	if (other.size_ != 0) {
@@ -15,7 +16,7 @@ QueueArr::QueueArr(const QueueArr& other) {
 		
 		int counter = 0;
 
-		while (tail_ < other.size_) {
+		while (counter < other.size_) {
 			data_[counter] = other.data_[counter];
 			++counter;
 		}
@@ -26,14 +27,14 @@ QueueArr::QueueArr(const QueueArr& other) {
 }
 
 QueueArr::QueueArr(QueueArr&& other) noexcept {
-	capacity_ = other.capacity_;
-	size_ = other.size_;
 	std::swap(data_, other.data_);
-	head_ = other.head_;
-	tail_ = other.tail_;
+	std::swap (capacity_, other.capacity_);
+	std::swap (size_, other.size_);
+	std::swap (head_, other.head_);
+	std::swap (tail_ , other.tail_);
 }
 
-QueueArr::QueueArr(const std::initializer_list<Complex> list) {
+QueueArr::QueueArr(const std::initializer_list<Complex>& list) {
 	capacity_ = list.size() * 2;
 	size_ = list.size();
 
@@ -49,17 +50,15 @@ QueueArr::QueueArr(const std::initializer_list<Complex> list) {
 }
 
 QueueArr& QueueArr::operator=(const QueueArr& other) {
-	if (*this != other) {
+	if (this != &other) {
 
 		if (other.size_ != 0) {
 
-			if (data_ == nullptr) {
-				data_ = std::make_unique<Complex[]> (other.capacity_);
-			}
-
-			capacity_ = other.capacity_;
+			data_.reset();
 			size_ = other.size_;
-			
+			capacity_ = other.capacity_;
+			data_ = std::make_unique<Complex[]>(capacity_);
+
 			int counter = 0;
 
 			while (counter < capacity_) {
@@ -78,8 +77,8 @@ QueueArr& QueueArr::operator=(const QueueArr& other) {
 	return *this;
 }
 
-QueueArr& QueueArr::operator=(QueueArr&& other){
-	if (*this != other) {
+QueueArr& QueueArr::operator=(QueueArr&& other) noexcept{
+	if (this != &other) {
 			capacity_ = other.capacity_;
 			size_ = other.size_;
 			head_ = other.head_;
@@ -89,7 +88,7 @@ QueueArr& QueueArr::operator=(QueueArr&& other){
 	return *this;
 }
 
-QueueArr& QueueArr::operator=(const std::initializer_list <Complex> list) {
+QueueArr& QueueArr::operator=(const std::initializer_list <Complex>& list) {
 	(*this).Clear();
 
 	capacity_ = list.size() * 2;
@@ -107,12 +106,14 @@ QueueArr& QueueArr::operator=(const std::initializer_list <Complex> list) {
 	return *this;
 }
 
-bool QueueArr::operator==(const QueueArr& other) {
+/* bool QueueArr::operator==(const QueueArr& other) {
 	int count = 0;
 	if (size_ == other.size_) {
-		for (int i = 0; i < size_; ++i) {
-			if (data_[(head_ + i) % capacity_] != other.data_[(other.head_ + i) % other.capacity_]) {
-				++count;
+		if (capacity_ == other.capacity_){
+			for (int i = 0; i < size_; ++i) {
+				if (data_[(head_ + i) % capacity_] == other.data_[(other.head_ + i) % other.capacity_]) {
+					++count;
+				}
 			}
 		}
 		return (count == size_);
@@ -124,7 +125,7 @@ bool QueueArr::operator==(const QueueArr& other) {
 
 bool QueueArr::operator!=(const QueueArr& other) {
 	return !((*this) == other);
-}
+} */
 
 void QueueArr::Push(const Complex& complex){
 	if ((*this).IsEmpty()) {
@@ -146,7 +147,7 @@ void QueueArr::Push(const Complex& complex){
 	else {
 		
 		auto queue = std::make_unique<Complex[]>(capacity_ * 2);
-		queue[0] = data_[0];
+		//queue[0] = data_[0];
 
 		for (int i = 0; i < capacity_; ++i) {
 			queue[i] = data_[(head_ + i) % capacity_];
