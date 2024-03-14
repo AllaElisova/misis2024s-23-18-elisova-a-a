@@ -19,6 +19,10 @@ int main() {
 Complex z1(1, 2);
 Complex z2(3, 4);
 Complex z3(5, 6);
+Complex z4(7, 8);
+Complex z5(9, 10);
+Complex z6(11, 12);
+Complex z7(13, 14);
 
 TEST_CASE("default ctor") {
 	StackLst s;
@@ -80,4 +84,28 @@ TEST_CASE("clear") {
   CHECK_EQ(s.IsEmpty(), true);
   s.Pop();
   CHECK_EQ(s.IsEmpty(), true);
+}
+
+TEST_CASE("move semantics") {
+  StackLst q;
+  q.Push(z4);
+  q.Push(z5);
+  q.Push(z6);
+  StackLst &&h = std::move(q);
+  StackLst s(h);
+  CHECK_EQ(s.Top(), z6);
+  CHECK_EQ(h.IsEmpty(), false);
+  CHECK_EQ(h.Top(), z6);
+  s.Pop();
+  CHECK_EQ(s.Top(), z5);
+
+  StackLst t;
+  t.Push(z1);
+  t = h;
+  CHECK_EQ(t.Top(), z6);
+  h.Push(z2);
+  h.Push(z3);
+  CHECK_EQ(t.Top(), z6);
+  h.Clear();
+  CHECK_EQ(t.Top(), z6);
 }

@@ -67,11 +67,12 @@ QueueLst& QueueLst::operator=(QueueLst&& other) noexcept {
 			Clear();
 		}
 		else {
-			head_ = new Node;
+
 			std::swap(head_, other.head_);
 			std::swap(tail_, other.tail_);
 		}
 	}
+	return *this;
 }
 
 void QueueLst::Push(const Complex& complex) {

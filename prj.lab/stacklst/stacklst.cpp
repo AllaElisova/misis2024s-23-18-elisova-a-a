@@ -34,7 +34,6 @@ StackLst::StackLst(StackLst&& other) noexcept {
 		head_ = new Node;
 		std::swap(head_, other.head_);
 	}
-
 }
 
 StackLst& StackLst::operator=(const StackLst& other) {
@@ -70,7 +69,6 @@ StackLst& StackLst::operator=(StackLst&& other) noexcept {
 			head_ = nullptr;
 		}
 		else {
-			head_ = new Node;
 			std::swap(head_, other.head_);
 		}
 	}
