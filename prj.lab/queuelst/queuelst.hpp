@@ -11,8 +11,10 @@ class QueueLst {
 public:
 	QueueLst() = default;
 	QueueLst(const QueueLst& other);
+	QueueLst(QueueLst&& other) noexcept;
 
 	QueueLst& operator=(const QueueLst& other);
+	QueueLst& operator=(QueueLst&& other) noexcept;
 
 	void Push(const Complex& complex);
 	void Pop() noexcept;

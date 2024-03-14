@@ -25,6 +25,18 @@ QueueLst::QueueLst(const QueueLst& other) {
 	}
 }
 
+QueueLst::QueueLst(QueueLst&& other) noexcept {
+	if (other.head_ == nullptr) {
+		head_ = nullptr;
+		tail_ = nullptr;
+	}
+	else {
+		head_ = new Node;
+		std::swap(head_, other.head_);
+		std::swap(tail_, other.tail_);
+	}
+}
+
 QueueLst& QueueLst::operator=(const QueueLst& other) {
 	(*this).Clear();
 	if (other.head_ == nullptr) {
@@ -47,6 +59,19 @@ QueueLst& QueueLst::operator=(const QueueLst& other) {
 		temp->next = nullptr;
 	}
 		return (*this);
+}
+
+QueueLst& QueueLst::operator=(QueueLst&& other) noexcept {
+	if (head_ != other.head_) {
+		if (other.head_ == nullptr) {
+			Clear();
+		}
+		else {
+			head_ = new Node;
+			std::swap(head_, other.head_);
+			std::swap(tail_, other.tail_);
+		}
+	}
 }
 
 void QueueLst::Push(const Complex& complex) {
