@@ -4,20 +4,13 @@
 #include <vector>
 #include <algorithm>
 
-long long int stepen(int num, int st) {
-	int a = num;
-	for (int i = 2; i < st; ++i) {
-		a *= a;
-	}
-
-	return a;
-}
-
 int main() {
 	int times = 0;
 	std::cin >> times;
 	for (int i = 0; i < times; ++i) {
+
 		int length = 0;
+		int size = 0;
 		std::vector <int> v(0);
 		std::cin >> length;
 
@@ -25,6 +18,7 @@ int main() {
 			int a = 0;
 			std::cin >> a;
 			v.push_back(a);
+			++size;
 		}
 
 		std::sort(v.begin(), v.end());
@@ -34,8 +28,8 @@ int main() {
 		int count = 0;
 		long long int pr = v[0];
 		long long int sum = v[0];
-		
-		while (start < v.size() - 1) {
+
+		while (start < size - 1) {
 			pr = pr & v.at(current);
 			sum = sum ^ v.at(current);
 
@@ -55,8 +49,7 @@ int main() {
 				++current;
 			}
 
-
-			if (current == v.size()){
+			if (current == size) {
 				++start;
 				pr = v.at(start);
 				sum = v.at(start);
