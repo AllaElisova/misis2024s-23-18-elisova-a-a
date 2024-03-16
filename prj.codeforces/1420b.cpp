@@ -1,7 +1,17 @@
 //not finished
 
 #include <iostream>
-#include<vector>
+#include <vector>
+#include <algorithm>
+
+long long int stepen(int num, int st) {
+	int a = num;
+	for (int i = 2; i < st; ++i) {
+		a *= a;
+	}
+
+	return a;
+}
 
 int main() {
 	int times = 0;
@@ -17,26 +27,40 @@ int main() {
 			v.push_back(a);
 		}
 
+		std::sort(v.begin(), v.end());
+
 		int start = 0;
 		int current = 1;
 		int count = 0;
 		long long int pr = v[0];
-		long long sum = v[0];
-		while (current < v.size() - 1) {
-			pr = pr & v[current];
-			sum = sum ^ v[current];
-			if (pr > sum) {
+		long long int sum = v[0];
+		
+		while (start < v.size() - 1) {
+			pr = pr & v.at(current);
+			sum = sum ^ v.at(current);
+
+			if (pr == 0) {
+				++start;
+				pr = v.at(start);
+				sum = v.at(start);
+				current = start + 1;
+				continue;
+			}
+
+			if (pr >= sum) {
 				++count;
 				++current;
 			}
-			else if (pr == 0) {
-				++start;
-				current = start;
-				pr = v[current];
-				sum = v[current];
-			}
 			else {
 				++current;
+			}
+
+
+			if (current == v.size()){
+				++start;
+				pr = v.at(start);
+				sum = v.at(start);
+				current = start + 1;
 			}
 		}
 
