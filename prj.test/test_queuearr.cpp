@@ -28,10 +28,45 @@ TEST_CASE("ctor") {
 	CHECK_EQ(r.IsEmpty(), true);
 	CHECK_THROWS(r.Top());
 
+	r.Push(z9);
+	CHECK_EQ(r.Top(), z9);
+	CHECK_EQ(r.End(), z9);
+
 	QueueArr t = q;
 	CHECK_EQ(t.IsEmpty(), true);
 	CHECK_THROWS(t.Top());
 	CHECK_THROWS(t.End());
+
+	QueueArr s = { z1, z2, z3 };
+	QueueArr ss(s);
+	CHECK_EQ(ss.Top(), z1);
+	CHECK_EQ(ss.End(), z3);
+	ss.Pop();
+	CHECK_EQ(s.Top(), z1);
+	CHECK_EQ(ss.Top(), z2);
+	s.Pop();
+	s.Pop();
+	s.Pop();
+
+	QueueArr sss(s);
+	CHECK_THROWS(s.Top());
+
+	s.Clear();
+	s.Pop();
+	s.Pop();
+	QueueArr ssss(s);
+	CHECK_EQ(ssss.IsEmpty(), true);
+
+	ssss.Push(z1);
+	ssss.Push(z2);
+	CHECK_EQ(ssss.End(), z2);
+	ssss.Pop();
+	ssss.Pop();
+	ssss.Pop();
+
+	QueueArr cat = { z1, z2, z3, z4, z5, z6, z7, z8, z9 };
+	QueueArr kitten(cat);
+	CHECK_EQ(kitten.Top(), z1);
 }
 
 TEST_CASE("init list ctor") {
@@ -190,7 +225,8 @@ TEST_CASE("push 3") {
 	CHECK_EQ(big_kitten.Top(), z10);
 	CHECK_EQ(big_kitten.End(), z10);
 
-
+	big_kitten = big_big_kitten;
+	CHECK_EQ(big_kitten.End(), z9);
 }
 
 TEST_CASE("pop") {
@@ -231,6 +267,9 @@ TEST_CASE("clear") {
 	q.Pop();
 	CHECK_THROWS(q.Top());
 	CHECK_THROWS(q.End());
+
+	q.Clear();
+	CHECK_EQ(q.IsEmpty(), true);
 }
 
 Complex c1(1, 2);
