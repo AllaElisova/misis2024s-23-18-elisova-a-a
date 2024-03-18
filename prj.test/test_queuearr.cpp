@@ -27,6 +27,11 @@ TEST_CASE("ctor") {
 	CHECK_EQ(q.IsEmpty(), true);
 	CHECK_EQ(r.IsEmpty(), true);
 	CHECK_THROWS(r.Top());
+
+	QueueArr t = q;
+	CHECK_EQ(t.IsEmpty(), true);
+	CHECK_THROWS(t.Top());
+	CHECK_THROWS(t.End());
 }
 
 TEST_CASE("init list ctor") {
@@ -36,6 +41,13 @@ TEST_CASE("init list ctor") {
 	CHECK_EQ(q.IsEmpty(), false);
 	CHECK_EQ(q.Top(), z1);
 	CHECK_EQ(q.End(), z2);
+	q.Pop();
+	CHECK_EQ(q.Top(), z2);
+	q.Pop();
+	CHECK_THROWS(q.Top());
+
+	QueueArr t = {};
+	CHECK_EQ(t.IsEmpty(), true);
 }
 
 TEST_CASE("eq operator") {
@@ -44,7 +56,9 @@ TEST_CASE("eq operator") {
 	QueueArr r;
 	r = q;
 	CHECK_EQ(q.IsEmpty(), false);
+	CHECK_EQ(r.IsEmpty(), false);
 	CHECK_EQ(q.Top(), z1);
+	CHECK_EQ(q.End(), z1);
 	CHECK_EQ(r.Top(), z1);
 	CHECK_EQ(r.End(), z1);
 
@@ -65,8 +79,15 @@ TEST_CASE("eq operator") {
 
 	CHECK_EQ(TEST.Top(), z2);
 	CHECK_EQ(TEST.End(), z3);
-	CHECK_EQ(TEST.End(), z3);
-	CHECK_EQ(TEST.End(), z3);
+
+	QueueArr LARGE = { z1, z2, z3, z4, z1, z2, z3, z4, z1, z2, z3, z4 };
+	QueueArr smol = { z1, z2, z3 };
+	smol = LARGE;
+	CHECK_EQ(smol.Top(), z1);
+	CHECK_EQ(smol.End(), z4);
+
+	LARGE = TEST;
+	CHECK_EQ(LARGE.Top(), z2);
 }
 
 TEST_CASE("push") {
@@ -120,6 +141,56 @@ TEST_CASE("push") {
 	CHECK_EQ(w.Top(), z2);
 	w.Pop();
 	CHECK_EQ(w.Top(), z3); 
+}
+
+TEST_CASE("push 2") {
+	QueueArr cat = { z1, z2, z3, z4 };
+	cat.Pop();
+	cat.Push(z5);
+	CHECK_EQ(cat.Top(), z2);
+	CHECK_EQ(cat.End(), z5);
+	cat.Pop();
+	cat.Push(z6);
+	cat.Pop();
+	cat.Push(z7);
+	cat.Pop();
+	cat.Push(z8);
+	CHECK_EQ(cat.Top(), z5);
+	CHECK_EQ(cat.End(), z8);
+}
+
+TEST_CASE("push 3") {
+	QueueArr big_kitten = { z1, z2, z3, z4, z5, z6, z7, z8 };
+	QueueArr big_big_kitten{ z1, z2, z3, z4, z5, z6, z7, z8, z9 };
+	//big_kitten = big_big_kitten;
+	big_kitten.Pop();
+	big_kitten.Push(z10);
+	CHECK_EQ(big_kitten.Top(), z2);
+	big_kitten.Pop();
+	big_kitten.Push(z10);
+	CHECK_EQ(big_kitten.Top(), z3);
+	big_kitten.Pop();
+	big_kitten.Push(z10);
+	CHECK_EQ(big_kitten.Top(), z4);
+	big_kitten.Pop();
+	big_kitten.Push(z10);
+	CHECK_EQ(big_kitten.Top(), z5);
+	big_kitten.Pop();
+	big_kitten.Push(z10);
+	CHECK_EQ(big_kitten.Top(), z6);
+	big_kitten.Pop();
+	big_kitten.Push(z10);
+	CHECK_EQ(big_kitten.Top(), z7);
+	big_kitten.Pop();
+	big_kitten.Push(z10);
+	CHECK_EQ(big_kitten.Top(), z8);
+	big_kitten.Pop();
+	big_kitten.Push(z10);
+
+	CHECK_EQ(big_kitten.Top(), z10);
+	CHECK_EQ(big_kitten.End(), z10);
+
+
 }
 
 TEST_CASE("pop") {
