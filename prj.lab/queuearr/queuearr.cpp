@@ -25,7 +25,7 @@ QueueArr::QueueArr(const QueueArr& other) {
 }
 
 QueueArr::QueueArr(QueueArr&& other) noexcept {
-	std::swap(data_, other.data_);
+	std::swap (data_, other.data_);
 	std::swap (capacity_, other.capacity_);
 	std::swap (size_, other.size_);
 	std::swap (head_, other.head_);
@@ -104,27 +104,6 @@ QueueArr& QueueArr::operator=(const std::initializer_list <Complex>& list) {
 	return *this;
 }
 
-/* bool QueueArr::operator==(const QueueArr& other) {
-	int count = 0;
-	if (size_ == other.size_) {
-		if (capacity_ == other.capacity_){
-			for (int i = 0; i < size_; ++i) {
-				if (data_[(head_ + i) % capacity_] == other.data_[(other.head_ + i) % other.capacity_]) {
-					++count;
-				}
-			}
-		}
-		return (count == size_);
-	}
-	else {
-		return false;
-	}
-}
-
-bool QueueArr::operator!=(const QueueArr& other) {
-	return !((*this) == other);
-} */
-
 void QueueArr::Push(const Complex& complex){
 	if ((*this).IsEmpty()) {
 	
@@ -145,7 +124,6 @@ void QueueArr::Push(const Complex& complex){
 	else {
 		
 		auto queue = std::make_unique<Complex[]>(capacity_ * 2);
-		//queue[0] = data_[0];
 
 		for (int i = 0; i < capacity_; ++i) {
 			queue[i] = data_[(head_ + i) % capacity_];

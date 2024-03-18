@@ -34,6 +34,11 @@ public:
 
 private:
   struct Node {
+		Node() = default;
+		Node(const Node& other);
+		Node(const Node* other);
+		bool operator < (const Node& other) const noexcept;
+		bool operator > (const Node& other) const noexcept;
 		float value_ = 0;
 		Node* left_ = nullptr;
 		Node* right_ = nullptr;

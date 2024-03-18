@@ -1,34 +1,13 @@
 #include "queuelstpr.hpp"
 /*
 QueueLstPr::QueueLstPr(const QueueLstPr& other) {
-	if (other.root_ == nullptr) {
-		root_ = nullptr;
-
-	}
-
-	else {
-	
-		Node* root_temp = other.root_;
-	
-		root_ = other.root_
-		Node* temp = other.root_->left_;
-
-		while (temp->right_ != nullptr) {
-			temp->right_ = new Node;
-			next_elem = next_elem->right_;
-			temp->value = next_elem->value;
-		}
-
-		temp->right_ = nullptr;
-	}
+	root_ = new Node(other.root_);
+	copy_node(root_, other.root_);
 }
 
 QueueLstPr::QueueLstPr(QueueLstPr&& other) {
-	head_ = other.head_;
-	tail_ = other.tail_;
-
-	other.head_ = nullptr;
-	other.tail_ = nullptr;
+	root_ = other.root_;
+	other.root_ = nullptr;
 }
 
 QueueLstPr::QueueLstPr(const std::initializer_list<float>& list) {
@@ -38,26 +17,17 @@ QueueLstPr::QueueLstPr(const std::initializer_list<float>& list) {
 }
 
 QueueLstPr& QueueLstPr::operator=(const QueueLstPr& other) {
-	(*this).Clear();
-	if (other.head_ == nullptr) {
-		head_ = nullptr;
-		tail_ = nullptr;
-	}
-	else {
-		head_ = new Node;
-		head_->value = other.head_->value;
-		Node* next_elem = other.head_;
-		Node* temp = head_;
-
-
-		while (next_elem->next_ != nullptr) {
-			temp->next_ = new Node;
-			next_elem = next_elem->next_;
-			temp->value = next_elem->value;
+	if (this != &other) {
+		if (other.IsEmpty()) {
+			(*this).Clear();
 		}
-		tail_ = temp;
-		temp->next_ = nullptr;
+		else {
+			(*this).Clear();
+			root_ = new Node(other.root_);
+			copy_node(root_, other.root_);
+		}
 	}
+
 
 	return *this;
 }
@@ -131,6 +101,16 @@ void QueueLstPr::Pop() {
 
 QueueLstPr::~QueueLstPr() {
 	(*this).Clear();
+}
+
+QueueLstPr::Node::Node(const Node& other) {
+	value_ = other.value_;
+	count_ = other.count_;
+}
+
+QueueLstPr::Node::Node(const Node* other) {
+	value_ = other->value_;
+	count_ = other->count_;
 }
 
 void QueueLstPr::copy_node(Node* cur_node, const Node* other_node) noexcept {
