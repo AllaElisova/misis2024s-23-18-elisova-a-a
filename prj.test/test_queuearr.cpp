@@ -64,9 +64,21 @@ TEST_CASE("ctor") {
 	ssss.Pop();
 	ssss.Pop();
 
-	QueueArr cat = { z1, z2, z3, z4, z5, z6, z7, z8, z9 };
+	QueueArr cat = { z1, z2, z3, z4, z5, z6};
+	cat.Pop();
+	cat.Pop();
+	cat.Push(z7);
+	cat.Push(z8);
+	cat.Push(z9);
+	CHECK_EQ(cat.Top(), z3);
+	CHECK_EQ(cat.End(), z9);
+
 	QueueArr kitten(cat);
-	CHECK_EQ(kitten.Top(), z1);
+	kitten.Push(z10);
+	kitten.Push(z11);
+	CHECK_EQ(kitten.Top(), z3);
+	CHECK_EQ(kitten.End(), z11);
+
 }
 
 TEST_CASE("init list ctor") {
@@ -123,6 +135,31 @@ TEST_CASE("eq operator") {
 
 	LARGE = TEST;
 	CHECK_EQ(LARGE.Top(), z2);
+
+	QueueArr big = { z1, z2, z3, z4, z5, z6, z7, z8, z9 };
+	QueueArr small = { z1, z2, z3, z4, z5, z6, z7, z8 };
+	big = small;
+	CHECK_EQ(big.End(), z8);
+	big.Pop();
+	big.Pop();
+	big.Pop();
+	big.Pop();
+	big.Pop();
+	big.Pop();
+	big.Pop();
+	big.Pop();
+	CHECK_EQ(big.IsEmpty(), true);
+
+	small.Pop();
+	small.Pop();
+	small.Pop();
+	small.Pop();
+	small.Pop();
+	small.Pop();
+	small.Pop();
+	small.Pop();
+	CHECK_EQ(small.IsEmpty(), true);
+
 }
 
 TEST_CASE("push") {
@@ -197,7 +234,7 @@ TEST_CASE("push 2") {
 TEST_CASE("push 3") {
 	QueueArr big_kitten = { z1, z2, z3, z4, z5, z6, z7, z8 };
 	QueueArr big_big_kitten{ z1, z2, z3, z4, z5, z6, z7, z8, z9 };
-	//big_kitten = big_big_kitten;
+
 	big_kitten.Pop();
 	big_kitten.Push(z10);
 	CHECK_EQ(big_kitten.Top(), z2);

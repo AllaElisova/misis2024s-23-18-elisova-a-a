@@ -9,13 +9,14 @@
 
 QueueArr::QueueArr(const QueueArr& other) {
 		capacity_ = other.capacity_;
+		size_ = other.size_;
 		data_ = std::make_unique<Complex[]>(capacity_);
 
-		size_ = 0;
+		int counter = 0;
 
-		while (size_ < other.size_) {
-			data_[size_] = other.data_[size_];
-			++size_;
+		while (counter < capacity_) {
+			data_[counter] = other.data_[counter];
+			++counter;
 		}
 
 		head_ = other.head_;
