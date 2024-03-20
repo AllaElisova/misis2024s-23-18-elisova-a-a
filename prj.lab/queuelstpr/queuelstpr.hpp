@@ -10,11 +10,11 @@ class QueueLstPr {
 public:
 	 QueueLstPr() = default;
 	 QueueLstPr(const QueueLstPr& other);
-	 QueueLstPr(QueueLstPr&& other);
+	 QueueLstPr(QueueLstPr&& other) noexcept;
 	 QueueLstPr(const std::initializer_list<float>& list);
 
 	 QueueLstPr& operator= (const QueueLstPr& other);
-	 QueueLstPr& operator= (QueueLstPr&& other);
+	 QueueLstPr& operator= (QueueLstPr&& other) noexcept;
 	 QueueLstPr& operator= (const std::initializer_list<float> list);
 
 	 bool IsEmpty() const noexcept;
@@ -25,9 +25,6 @@ public:
 	 float& Top();
 	 const float& Top() const;
 
-	 float& End();
-	 const float& End() const;
-
 	 void Clear() noexcept;
 
 	 ~QueueLstPr();
@@ -37,8 +34,11 @@ private:
 		Node() = default;
 		Node(const Node& other);
 		Node(const Node* other);
-		bool operator < (const Node& other) const noexcept;
-		bool operator > (const Node& other) const noexcept;
+
+		//bool operator < (const Node& other) const noexcept;
+		//bool operator > (const Node& other) const noexcept;
+		Node& operator = (const Node& other);
+
 		float value_ = 0;
 		Node* left_ = nullptr;
 		Node* right_ = nullptr;
@@ -47,6 +47,7 @@ private:
 	};
 
 	void copy_node(Node* cur_node, const Node* other_node) noexcept;
+	void Clear(Node* node) noexcept;
 	Node* root_ = nullptr;
 };
 
