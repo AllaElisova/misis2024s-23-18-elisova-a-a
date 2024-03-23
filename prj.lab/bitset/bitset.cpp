@@ -137,7 +137,7 @@ void BitSet::Set(const int32_t index, const bool bit) {
 	}
 } 
 
-uint32_t FillPos(const bool bit) {
+uint32_t FillBit(const bool bit) {
 	uint32_t pos = 1;
 	uint32_t d = 1;
 	if (bit == true) {
@@ -150,32 +150,33 @@ uint32_t FillPos(const bool bit) {
 		pos = 0;
 	}
 	return pos;
-}
+} 
 
 uint32_t CutPos(uint32_t ost) {
-	uint32_t pos = 1;
+	uint32_t pos = 0;
+	uint32_t diff = 1;
+	diff = diff << 31;
 
-	if (ost != 0) {
-
-		pos = pos << 31;
-		uint32_t diff = 1;
-		diff = diff << 31;
-
-		for (int i = 1; i < ost; ++i) {
-			diff = diff >> 1;
-			pos += diff;
-		}
+	for (int i = 0; i < ost; ++i) {
+		diff = diff >> 1;
+		pos += diff;
 	}
+	
 	return pos;
 }
 
 void BitSet::Fill(const bool bit) {
 	for (int i = 0; i < data_.size(); ++i) {
 		if (bit == false) {
-			data_.at(i) = data_.at(i) & FillPos(bit);
+			data_.at(i) = data_.at(i) & FillBit(bit);
 		}
 		else {
-			data_.at(i) = data_.at(i) | FillPos(bit);
+			data_.at(i) = data_.at(i) | FillBit(bit);
+
+			uint32_t ost = size_ % 32;
+			if (ost != 0) {
+				data_.at(data_.size() - 1) = data_.at(data_.size() - 1) & CutPos(ost);
+			}
 		}
 	}
 }

@@ -83,6 +83,21 @@ TEST_CASE("operator ~") {
 	CHECK_EQ(qq.Get(21), 0);
 }
 
+TEST_CASE("fill") {
+	BitSet b;
+	b.Resize(20);
+	b.Fill(1);
+	b.Resize(21);
+	CHECK_EQ(b.Get(1), 1);
+	CHECK_EQ(b.Get(20), 1);
+	CHECK_EQ(b.Get(21), 0);
+	b.Resize(63);
+	b.Fill(1);
+	b.Resize(64);
+	CHECK_EQ(b.Get(63), 1);
+	CHECK_EQ(b.Get(64), 0);
+}
+
 TEST_CASE("& operator") {
 	BitSet b;
 	b.Resize(20);
