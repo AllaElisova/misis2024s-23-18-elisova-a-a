@@ -240,7 +240,7 @@ BitSet operator | (const BitSet& set1, const BitSet& set2) {
 
 BitSet operator ^ (const BitSet& set1, const BitSet& set2) {
 	BitSet res(set1);
-	res |= set2;
+	res ^= set2;
 	return res;
 }
 

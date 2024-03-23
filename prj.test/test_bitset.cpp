@@ -101,3 +101,41 @@ TEST_CASE("& operator") {
 	CHECK_EQ(r.Get(18), 1);
 	CHECK_EQ(r.Get(19), 0);
 }
+
+TEST_CASE("| operator") {
+	BitSet b;
+	b.Resize(20);
+	b.Set(18, 1);
+	b.Set(19, 1);
+	b.Set(20, 1);
+
+	BitSet c;
+	c.Resize(20);
+	c.Set(16, 1);
+	c.Set(17, 1);
+	c.Set(18, 1);
+
+	BitSet r = b | c;
+	CHECK_EQ(r.Get(17), 1);
+	CHECK_EQ(r.Get(18), 1);
+	CHECK_EQ(r.Get(19), 1);
+}
+
+TEST_CASE("^ operator") {
+	BitSet b;
+	b.Resize(20);
+	b.Set(18, 1);
+	b.Set(19, 1);
+	b.Set(20, 1);
+
+	BitSet c;
+	c.Resize(20);
+	c.Set(16, 1);
+	c.Set(17, 1);
+	c.Set(18, 1);
+
+	BitSet r = b ^ c;
+	CHECK_EQ(r.Get(17), 1);
+	CHECK_EQ(r.Get(18), 0);
+	CHECK_EQ(r.Get(19), 1);
+}
