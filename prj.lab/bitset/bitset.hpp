@@ -29,7 +29,7 @@ public:
 
 	void Fill(const bool bit);
 
-	~BitSet();
+	~BitSet() = default;
 
 private:
 	int32_t size_ = 0;

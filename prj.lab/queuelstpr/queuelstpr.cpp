@@ -3,8 +3,10 @@
 #include "queuelstpr.hpp"
 
 QueueLstPr::QueueLstPr(const QueueLstPr& other) {
-	root_ = new Node(other.root_);
-	copy_node(root_, other.root_);
+	if (other.IsEmpty() == false) {
+		root_ = new Node(other.root_);
+		copy_node(root_, other.root_);
+	}
 }
 
 QueueLstPr::QueueLstPr(QueueLstPr&& other) noexcept{
