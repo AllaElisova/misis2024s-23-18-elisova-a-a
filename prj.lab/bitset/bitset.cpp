@@ -1,14 +1,12 @@
-/*#include <vector>
+#include <vector>
 #include <memory>
 #include <stdexcept>
 #include "bitset.hpp"
 
 
 BitSet::BitSet(const BitSet& other) {
-	std::vector <uint32_t> data_ (0);
-	for (int i = 0; i < other.size_; ++i) {
-		data_.at(i) = other.data_.at(i);
-	}
+	Resize(other.size_);
+	data_ = other.data_;
 	size_ = other.size_;
 }
 
@@ -18,10 +16,21 @@ BitSet::BitSet(BitSet&& other) noexcept {
 } 
 
 BitSet& BitSet::operator=(const BitSet& other) {
-	data_.assign(other.data_.cbegin(), other.data_.cend());
-	size_ = other.size_;
-
-	return *this;
+	if (size_ != other.size_) {
+		throw std::logic_error("unequal size");
+	}
+	else{
+		if (other.size_ == 0) {
+			data_.clear();
+			size_ = 0;
+		}
+		else{
+			data_.clear();
+			data_ = other.data_;
+			size_ = other.size_;
+		}
+		return *this;
+	}
 }
 
 BitSet& BitSet::operator=(BitSet&& other) noexcept{
@@ -30,13 +39,32 @@ BitSet& BitSet::operator=(BitSet&& other) noexcept{
 	return *this;
 }
 
-int32_t position(int32_t index) {
-	int32_t pos = 128;
-	for (int i = 0; i < index; ++i) {
-		pos /= 2;
+uint32_t gpos(int32_t ind) {
+	uint32_t pos = 1;
+	pos = pos << (31 - ind);
+	return pos;
+}
+
+uint32_t spos(int32_t ind, bool bit) {
+	uint32_t diff = 1;
+	diff = diff << (31 - ind);
+
+	if (bit == false) {
+		uint32_t pos = 1;
+		uint32_t d = 1;
+		for (int i = 0; i < 31; ++i) {
+			d = d << 1;
+			pos += d;
+		}
+		pos = pos - diff;
+		return pos;
 	}
 
-	return pos;
+	else {
+		uint32_t pos = 0;
+		pos = pos | diff;
+		return pos;
+	}
 }
 
 int32_t BitSet::GetSize() const noexcept {
@@ -47,42 +75,64 @@ void BitSet::Resize(const int32_t size) {
 	if (size < 0) {
 		throw std::invalid_argument("negative size");
 	}
-	if (size % 8 == 0) {
-		data_.resize(size / 8);
+
+	if (size % 32 == 0) {
+		data_.resize(size / 32);
 	}
 	else {
-		data_.resize(size / 8 + 1);
+		data_.resize(size / 32 + 1);
 	}
 	size_ = size;
 }
 
 bool BitSet::Get(const int32_t index) {
-	if (index < 0) {
+	if (index <= 0) {
 		throw std::invalid_argument("negative index");
 	}
-	else if (index >= size_) {
+	else if (index > size_) {
 		throw std::invalid_argument("invalid index");
 	}
 	else {
 		int32_t move = 0;
-		if (index % 8 == 0) {
-			move = index / 8;
+
+		if (index % 32 == 0) {
+			move = index / 32 - 1;
 		}
 		else {
-			move = index / 8 + 1;
+			move = index / 32;
 		}
-		int32_t pos = position(index % 8);
-		int32_t ans = 0;
-		ans = data_.at(move) & pos;
+
+		uint32_t ind = index % 32;
+		uint32_t pos = gpos(ind);
+		uint32_t ans = (data_.at(move) & pos);
 		return (bool(ans));
 	}
 }
 
 void BitSet::Set(const int32_t index, const bool bit) {
-	if (index < 0) {
+	if (index <= 0) {
 		throw std::invalid_argument("negative index");
 	}
-	else if (index >= size_) {
-
+	else if (index > size_) {
+		throw std::invalid_argument("invalid index");
 	}
-} */
+	else {
+		int32_t move = 0;
+
+		if (index % 32 == 0) {
+			move = index / 32 - 1;
+		}
+		else {
+			move = index / 32;
+		}
+		uint32_t ind = index % 32;
+		uint32_t pos = spos(ind, bit);
+
+		if (bit == false) {
+			data_.at(move) = (data_.at(move) & pos);
+		}
+		else {
+			data_.at(move) = (data_.at(move) | pos);
+		}
+	}
+} 
