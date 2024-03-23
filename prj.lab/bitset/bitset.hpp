@@ -22,9 +22,9 @@ public:
 	bool Get(const int32_t index);  //получить нужный бит значит сделать побитовое и с индексом
 	void Set(const int32_t index, const bool bit);  // побитовое или с индексом
 
+	void operator~ ();
 	void operator&= (const BitSet& other);
 	void operator|= (const BitSet& other);
-	void operator~ ();
 	void operator^= (const BitSet& other);
 
 	void Fill(const bool bit);

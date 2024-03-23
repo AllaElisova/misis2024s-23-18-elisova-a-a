@@ -136,3 +136,111 @@ void BitSet::Set(const int32_t index, const bool bit) {
 		}
 	}
 } 
+
+uint32_t FillPos(const bool bit) {
+	uint32_t pos = 1;
+	uint32_t d = 1;
+	if (bit == true) {
+		for (int i = 0; i < 31; ++i) {
+			d = d << 1;
+			pos += d;
+		}
+	}
+	else {
+		pos = 0;
+	}
+	return pos;
+}
+
+uint32_t CutPos(uint32_t ost) {
+	uint32_t pos = 1;
+
+	if (ost != 0) {
+
+		pos = pos << 31;
+		uint32_t diff = 1;
+		diff = diff << 31;
+
+		for (int i = 1; i < ost; ++i) {
+			diff = diff >> 1;
+			pos += diff;
+		}
+	}
+	return pos;
+}
+
+void BitSet::Fill(const bool bit) {
+	for (int i = 0; i < data_.size(); ++i) {
+		if (bit == false) {
+			data_.at(i) = data_.at(i) & FillPos(bit);
+		}
+		else {
+			data_.at(i) = data_.at(i) | FillPos(bit);
+		}
+	}
+}
+
+
+void BitSet::operator~() {
+
+	for (int i = 0; i < data_.size(); ++i) {
+		data_.at(i) = ~(data_.at(i));
+	}
+
+	uint32_t ost = size_ % 32;
+	if (ost != 0) {
+		data_.at(data_.size() - 1) = data_.at(data_.size() - 1) & CutPos(ost);
+	}
+}
+
+void BitSet::operator&= (const BitSet& other) {
+	if (size_ != other.size_) {
+		throw std::logic_error("unequal size");
+	}
+	else {
+		for (int i = 0; i < data_.size(); ++i) {
+			data_.at(i) &= other.data_.at(i);
+		}
+	}
+}
+
+void BitSet::operator|= (const BitSet& other) {
+	if (size_ != other.size_) {
+		throw std::logic_error("unequal size");
+	}
+	else {
+		for (int i = 0; i < data_.size(); ++i) {
+			data_.at(i) |= other.data_.at(i);
+		}
+	}
+}
+
+void BitSet::operator^= (const BitSet& other) {
+	if (size_ != other.size_) {
+		throw std::logic_error("unequal size");
+	}
+	else {
+		for (int i = 0; i < data_.size(); ++i) {
+			data_.at(i) ^= other.data_.at(i);
+		}
+	}
+}
+
+BitSet operator & (const BitSet& set1, const BitSet& set2) {
+	BitSet res(set1);
+	res &= set2;
+	return res;
+}
+
+BitSet operator | (const BitSet& set1, const BitSet& set2) {
+	BitSet res(set1);
+	res |= set2;
+	return res;
+}
+
+BitSet operator ^ (const BitSet& set1, const BitSet& set2) {
+	BitSet res(set1);
+	res |= set2;
+	return res;
+}
+
