@@ -6,14 +6,20 @@
 
 BitSet::BitSet(const BitSet& other) {
 	Resize(other.size_);
-	data_ = other.data_;
-	size_ = other.size_;
+
+	for (int i = 0; i < size_ / 32 + 1; ++i) {
+		data_[i] = other.data_[i];
+	}
 }
 
 BitSet::BitSet(BitSet&& other) noexcept {
 	std::swap(data_, other.data_);
 	std::swap(size_, other.size_);
 } 
+
+BitSet::BitSet(const int32_t size) {
+	Resize(size);
+}
 
 BitSet& BitSet::operator=(const BitSet& other) {
 	if (size_ != other.size_) {
@@ -72,16 +78,11 @@ int32_t BitSet::GetSize() const noexcept {
 }
 
 void BitSet::Resize(const int32_t size) {
-	if (size < 0) {
+	if (size <= 0) {
 		throw std::invalid_argument("negative size");
 	}
-
-	if (size % 32 == 0) {
-		data_.resize(size / 32);
-	}
-	else {
-		data_.resize(size / 32 + 1);
-	}
+	
+	data_.resize(size / 32 + 1);
 	size_ = size;
 }
 
@@ -94,13 +95,7 @@ bool BitSet::Get(const int32_t index) {
 	}
 	else {
 		int32_t move = 0;
-
-		if (index % 32 == 0) {
-			move = index / 32 - 1;
-		}
-		else {
-			move = index / 32;
-		}
+		move = index / 32;
 
 		uint32_t ind = index % 32;
 		uint32_t pos = gpos(ind);
@@ -119,12 +114,9 @@ void BitSet::Set(const int32_t index, const bool bit) {
 	else {
 		int32_t move = 0;
 
-		if (index % 32 == 0) {
-			move = index / 32 - 1;
-		}
-		else {
-			move = index / 32;
-		}
+		
+		move = index / 32;
+
 		uint32_t ind = index % 32;
 		uint32_t pos = spos(ind, bit);
 
@@ -245,3 +237,24 @@ BitSet operator ^ (const BitSet& set1, const BitSet& set2) {
 	return res;
 }
 
+BitSet::BiA::BiA(BitSet& bs, const int32_t index)
+	:bs_(bs), id_(index) {}
+
+BitSet::BiA& BitSet::BiA::operator=(const bool value) {
+	bs_.Set(id_, value);
+	return *this;
+}
+
+BitSet::BiA::operator bool() {
+	if (bs_.Get(id_) == 1) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+BitSet::BiA& BitSet::operator[] (const int32_t index) {
+	BiA temp = BiA(*this, index);
+	return temp;
+}

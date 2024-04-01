@@ -13,6 +13,7 @@ public:
 	BitSet() = default;
 	BitSet(const BitSet& other);
 	BitSet(BitSet&& other) noexcept;
+	BitSet(const int32_t size);
 
 	BitSet& operator= (const BitSet& other);
 	BitSet& operator=(BitSet&& other) noexcept;
@@ -34,6 +35,22 @@ public:
 private:
 	int32_t size_ = 0;
 	std::vector <uint32_t> data_;
+
+	class BiA {
+	public:
+		BiA(BitSet& bs, const int32_t index);
+		BiA& operator= (const bool value);
+		operator bool();
+		~BiA() = default;
+
+	private:
+		BitSet& bs_;
+		int32_t id_;
+	};
+
+public:
+	BiA& operator[] (const int32_t index);
+
 };
 
 

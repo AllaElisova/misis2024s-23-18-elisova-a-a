@@ -154,3 +154,14 @@ TEST_CASE("^ operator") {
 	CHECK_EQ(r.Get(18), 0);
 	CHECK_EQ(r.Get(19), 1);
 }
+
+TEST_CASE("BiA") {
+	BitSet b;
+	b.Resize(32);
+	b[20] = true;
+	CHECK_EQ(b.Get(20), 1);
+	b[20] = false;
+	CHECK_EQ(b.Get(20), 0);
+	b[32] = true;
+	CHECK_EQ(b.Get(32), 1);
+}
