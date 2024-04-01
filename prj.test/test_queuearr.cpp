@@ -1,5 +1,8 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
+#include <cstdint>
+#include <chrono>
+#include <utility>
 #include <complex/complex.hpp>
 #include <queuearr/queuearr.hpp>
 #include "doctest.h"
@@ -395,4 +398,93 @@ TEST_CASE("TOP THROW") {
 	CHECK_NOTHROW((void)qa.Top());
 	qa.Pop();
 	CHECK_THROWS((void)qa.Top());
+}
+
+TEST_CASE("[queuearr] - ctor") {
+	QueueArr qu;
+	CHECK(qu.IsEmpty());
+}
+
+TEST_CASE("[queuearr] - ctor copy") {
+	QueueArr qu;
+}
+
+inline double MeasureTimeCtorMove(const int pushed_count) {
+	QueueArr qu_src;
+	for (double v = 0.0; v < pushed_count; v += 1.0) {
+		qu_src.Push({ v, v });
+	}
+	const auto t_beg = std::chrono::steady_clock::now();
+	QueueArr qu_tgt = std::move(qu_src);
+	const auto t_end = std::chrono::steady_clock::now();
+	const std::chrono::duration<double> diff = t_end - t_beg;
+	return diff.count();
+}
+
+TEST_CASE("[queuearr] - ctor move") {
+	QueueArr qu_src;
+	QueueArr qu_tgt = std::move(qu_src);
+	if (!qu_src.IsEmpty() && !qu_tgt.IsEmpty()) {
+		CHECK(qu_src.Top() != qu_tgt.Top());
+	}
+}
+
+TEST_CASE("[queuearr] - operator= move") {
+	QueueArr qu_src;
+	QueueArr qu_tgt;
+	qu_tgt = std::move(qu_src);
+
+}
+
+TEST_CASE("aaaaaaaaaaaaaa") {
+	QueueArr q;
+	q.Push(z1);
+	q.Push(z2);
+	q.Push(z3);
+	q.Push(z4);
+	q.Push(z5);
+	q.Push(z6);
+	q.Push(z7);
+	q.Push(z8);
+	q.Pop();
+	q.Push(z9);
+	CHECK_EQ(q.Top(), z2);
+	CHECK_EQ(q.End(), z9);
+
+	QueueArr qq(q);
+	qq.Pop();
+	qq.Push(z10);
+	CHECK_EQ(qq.Top(), z3);
+	CHECK_EQ(qq.End(), z10);
+
+	QueueArr qqq(qq);
+	qqq.Pop();
+	qqq.Push(z11);
+	CHECK_EQ(qqq.Top(), z4);
+	CHECK_EQ(qqq.End(), z11);
+
+	QueueArr t = qqq;
+	qqq.Pop();
+	qqq.Push(z12);
+	CHECK_EQ(qqq.Top(), z5);
+	CHECK_EQ(qqq.End(), z12);
+
+	QueueArr c;
+	c.Push(z1);
+	c.Push(z2);
+	c.Push(z3);
+	c.Push(z4);
+	c.Push(z5);
+	c.Push(z6);
+	c.Push(z7);
+	c.Push(z8);
+	c.Push(z9);
+
+	t = c;
+	CHECK_EQ(t.Top(), z1);
+	CHECK_EQ(t.End(), z9);
+
+	t = q;
+	CHECK_EQ(t.Top(), z2);
+	CHECK_EQ(t.End(), z9);
 }
