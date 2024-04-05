@@ -28,6 +28,10 @@ int main() {
 			}
 		}
 
+		if (max_sim > different) {
+			--max_sim;
+			++different;
+		}
 		std::cout << std::min(different, max_sim) << std::endl;
 	 }
 }
