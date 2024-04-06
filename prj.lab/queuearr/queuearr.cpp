@@ -11,16 +11,19 @@ QueueArr::QueueArr(const QueueArr& other) {
 		capacity_ = other.capacity_;
 		size_ = other.size_;
 		data_ = std::make_unique<Complex[]>(capacity_);
+		head_ = 0;
+		tail_ = 0;
 
-		int counter = 0;
+		if (other.size_ != 0) {
+			int counter = 0;
+			while (counter < capacity_) {
+				data_[counter] = other.data_[counter];
+				++counter;
+			}
 
-		while (counter < capacity_) {
-			data_[counter] = other.data_[counter];
-			++counter;
+			head_ = other.head_;
+			tail_ = other.tail_;
 		}
-
-		head_ = other.head_;
-		tail_ = other.tail_;
 }
 
 QueueArr::QueueArr(QueueArr&& other) noexcept {
@@ -38,7 +41,6 @@ QueueArr::QueueArr(const std::initializer_list<Complex>& list) {
 	if (size_ != 0) {
 		data_ = std::make_unique<Complex[]>(capacity_);
 		head_ = 0;
-
 
 		for (Complex element : list) {
 			++tail_;
