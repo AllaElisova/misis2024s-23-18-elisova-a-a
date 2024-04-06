@@ -18,7 +18,7 @@ public:
 	BitSet& operator= (const BitSet& other);
 	BitSet& operator=(BitSet&& other) noexcept;
 
-	int32_t GetSize() const noexcept;
+	int32_t Size() const noexcept;
 	void Resize(const int32_t size);
 	bool Get(const int32_t index);  //получить нужный бит значит сделать побитовое и с индексом
 	void Set(const int32_t index, const bool bit);  // побитовое или с индексом
@@ -49,7 +49,7 @@ private:
 	};
 
 public:
-	BiA& operator[] (const int32_t index);
+	BiA operator[] (const int32_t index);
 
 };
 

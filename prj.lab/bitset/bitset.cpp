@@ -73,7 +73,7 @@ uint32_t spos(int32_t ind, bool bit) {
 	}
 }
 
-int32_t BitSet::GetSize() const noexcept {
+int32_t BitSet::Size() const noexcept {
 	return size_;
 }
 
@@ -254,7 +254,7 @@ BitSet::BiA::operator bool() {
 	}
 }
 
-BitSet::BiA& BitSet::operator[] (const int32_t index) {
+BitSet::BiA BitSet::operator[] (const int32_t index) {
 	BiA temp = BiA(*this, index);
 	return temp;
 }

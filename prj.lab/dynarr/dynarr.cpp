@@ -60,9 +60,9 @@ DynArr& DynArr::operator=(DynArr&& other) noexcept {
 		std::swap(data_, other.data_);
 		std::swap(size_, other.size_);
 		std::swap(capacity_, other.capacity_);
-
-		return *this;
 	}
+	return *this;
+	
 }
 
 void DynArr::Resize(const int32_t new_size) {
