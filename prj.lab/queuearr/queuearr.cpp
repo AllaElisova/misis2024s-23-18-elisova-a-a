@@ -5,17 +5,15 @@
 #include <memory>
 #include <complex/complex.hpp>
 #include "queuearr.hpp"
-#include <fstream>
 
 QueueArr::QueueArr(const QueueArr& other) {
 		capacity_ = other.capacity_;
 		size_ = other.size_;
-		data_ = std::make_unique<Complex[]>(capacity_);
-		head_ = 0;
-		tail_ = 0;
 
 		if (other.size_ != 0) {
 			int counter = 0;
+			data_ = std::make_unique<Complex[]>(capacity_);
+
 			while (counter < capacity_) {
 				data_[counter] = other.data_[counter];
 				++counter;

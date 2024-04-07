@@ -487,4 +487,17 @@ TEST_CASE("aaaaaaaaaaaaaa") {
 	t = q;
 	CHECK_EQ(t.Top(), z2);
 	CHECK_EQ(t.End(), z9);
+
+	t.Pop();
+	t.Pop();
+	t.Pop();
+	t.Pop();
+	t.Pop();
+	t.Pop();
+	t.Pop();
+	t.Pop();
+	CHECK_EQ(t.IsEmpty(), true);
+	QueueArr tt(t);
+	tt.Push(z15);
+	CHECK_EQ(tt.Top(), z15);
 }
