@@ -39,8 +39,8 @@ private:
 	std::ptrdiff_t head_ = -1;
 	std::ptrdiff_t tail_ = -1;
 	std::unique_ptr <Complex[]> data_ = nullptr;
-	size_t size_ = 0;
-	size_t capacity_ = 0;
+	uint32_t size_ = 0;
+	uint32_t capacity_ = 0;
 };
 
 #endif

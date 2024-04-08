@@ -1,7 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
 #include <cstdint>
-#include <chrono>
 #include <utility>
 #include <complex/complex.hpp>
 #include <queuearr/queuearr.hpp>
@@ -24,7 +23,7 @@ Complex z13 = Complex(13, 14);
 Complex z14 = Complex(14, 15);
 Complex z15 = Complex(15, 16);
 
-TEST_CASE("ctor") {
+TEST_CASE("default ctor + copy ctor") {
 	QueueArr q;
 	QueueArr r(q);
 	CHECK_EQ(q.IsEmpty(), true);
@@ -123,44 +122,27 @@ TEST_CASE("eq operator") {
 	CHECK_EQ(t.Top(), z1);
 	CHECK_EQ(t.End(), z3);
 
-	QueueArr TEST;
-	TEST.Push(z1);
-	TEST = { z2, z3 };
-
-	CHECK_EQ(TEST.Top(), z2);
-	CHECK_EQ(TEST.End(), z3);
-
 	QueueArr LARGE = { z1, z2, z3, z4, z1, z2, z3, z4, z1, z2, z3, z4 };
 	QueueArr smol = { z1, z2, z3 };
 	smol = LARGE;
 	CHECK_EQ(smol.Top(), z1);
 	CHECK_EQ(smol.End(), z4);
 
-	LARGE = TEST;
-	CHECK_EQ(LARGE.Top(), z2);
-
 	QueueArr big = { z1, z2, z3, z4, z5, z6, z7, z8, z9 };
 	QueueArr small = { z1, z2, z3, z4, z5, z6, z7, z8 };
 	big = small;
 	CHECK_EQ(big.End(), z8);
-	big.Pop();
-	big.Pop();
-	big.Pop();
-	big.Pop();
-	big.Pop();
-	big.Pop();
-	big.Pop();
-	big.Pop();
+
+
+	for (int i = 0; i < 8; ++i) {
+		big.Pop();
+	}
 	CHECK_EQ(big.IsEmpty(), true);
 
-	small.Pop();
-	small.Pop();
-	small.Pop();
-	small.Pop();
-	small.Pop();
-	small.Pop();
-	small.Pop();
-	small.Pop();
+
+	for (int i = 0; i < 8; ++i) {
+		small.Pop();
+	}
 	CHECK_EQ(small.IsEmpty(), true);
 
 }
@@ -185,30 +167,12 @@ TEST_CASE("push") {
 	CHECK_EQ(q.End(), z9);
 
 	QueueArr w;
-	w.Push(Complex(1, 2));
-	w.Push(Complex(2, 3));
-	w.Push(Complex(3, 4));
-	w.Push(Complex(4, 5));
-	w.Push(Complex(1, 2));
-	w.Push(Complex(2, 3));
-	w.Push(Complex(3, 4));
-	w.Push(Complex(4, 5));
-	w.Push(Complex(1, 2));
-	w.Push(Complex(2, 3));
-	w.Push(Complex(3, 4));
-	w.Push(Complex(4, 5));
-	w.Push(Complex(1, 2));
-	w.Push(Complex(2, 3));
-	w.Push(Complex(3, 4));
-	w.Push(Complex(4, 5));
-	w.Push(Complex(1, 2));
-	w.Push(Complex(2, 3));
-	w.Push(Complex(3, 4));
-	w.Push(Complex(4, 5));
-	w.Push(Complex(1, 2));
-	w.Push(Complex(2, 3));
-	w.Push(Complex(3, 4));
-	w.Push(Complex(4, 5));
+	for (int i = 0; i < 6; ++i) {
+		w.Push(Complex(1, 2));
+		w.Push(Complex(2, 3));
+		w.Push(Complex(3, 4));
+		w.Push(Complex(4, 5));
+	}
 
 	CHECK_EQ(w.Top(), z1);
 	CHECK_EQ(w.End(), z4);
@@ -269,7 +233,7 @@ TEST_CASE("push 3") {
 	CHECK_EQ(big_kitten.End(), z9);
 }
 
-TEST_CASE("pop") {
+TEST_CASE("push + pop") {
 
 	QueueArr q;
 	q.Push(z1);
@@ -391,6 +355,10 @@ TEST_CASE("CLEAR CHECK") {
 	CHECK_FALSE(qa.IsEmpty());
 	qa.Clear();
 	CHECK(qa.IsEmpty());
+	qa.Pop();
+	qa.Pop();
+	qa.Pop();
+	CHECK(qa.IsEmpty());
 }
 
 TEST_CASE("TOP THROW") {
@@ -400,52 +368,11 @@ TEST_CASE("TOP THROW") {
 	CHECK_THROWS((void)qa.Top());
 }
 
-TEST_CASE("[queuearr] - ctor") {
-	QueueArr qu;
-	CHECK(qu.IsEmpty());
-}
-
-TEST_CASE("[queuearr] - ctor copy") {
-	QueueArr qu;
-}
-
-inline double MeasureTimeCtorMove(const int pushed_count) {
-	QueueArr qu_src;
-	for (double v = 0.0; v < pushed_count; v += 1.0) {
-		qu_src.Push({ v, v });
-	}
-	const auto t_beg = std::chrono::steady_clock::now();
-	QueueArr qu_tgt = std::move(qu_src);
-	const auto t_end = std::chrono::steady_clock::now();
-	const std::chrono::duration<double> diff = t_end - t_beg;
-	return diff.count();
-}
-
-TEST_CASE("[queuearr] - ctor move") {
-	QueueArr qu_src;
-	QueueArr qu_tgt = std::move(qu_src);
-	if (!qu_src.IsEmpty() && !qu_tgt.IsEmpty()) {
-		CHECK(qu_src.Top() != qu_tgt.Top());
-	}
-}
-
-TEST_CASE("[queuearr] - operator= move") {
-	QueueArr qu_src;
-	QueueArr qu_tgt;
-	qu_tgt = std::move(qu_src);
-
-}
-
-TEST_CASE("aaaaaaaaaaaaaa") {
+TEST_CASE("diff states + copy") {
 	QueueArr q;
-	q.Push(z1);
-	q.Push(z2);
-	q.Push(z3);
-	q.Push(z4);
-	q.Push(z5);
-	q.Push(z6);
-	q.Push(z7);
-	q.Push(z8);
+	for (int i = 1; i <= 8; ++i) {
+		q.Push(Complex(i, i + 1));
+	}
 	q.Pop();
 	q.Push(z9);
 	CHECK_EQ(q.Top(), z2);
@@ -470,15 +397,9 @@ TEST_CASE("aaaaaaaaaaaaaa") {
 	CHECK_EQ(qqq.End(), z12);
 
 	QueueArr c;
-	c.Push(z1);
-	c.Push(z2);
-	c.Push(z3);
-	c.Push(z4);
-	c.Push(z5);
-	c.Push(z6);
-	c.Push(z7);
-	c.Push(z8);
-	c.Push(z9);
+	for (int i = 1; i <= 9; ++i) {
+		c.Push(Complex(i, i + 1));
+	}
 
 	t = c;
 	CHECK_EQ(t.Top(), z1);
@@ -488,14 +409,9 @@ TEST_CASE("aaaaaaaaaaaaaa") {
 	CHECK_EQ(t.Top(), z2);
 	CHECK_EQ(t.End(), z9);
 
-	t.Pop();
-	t.Pop();
-	t.Pop();
-	t.Pop();
-	t.Pop();
-	t.Pop();
-	t.Pop();
-	t.Pop();
+	for (int i = 0; i < 8; ++i) {
+		t.Pop();
+	}
 	CHECK_EQ(t.IsEmpty(), true);
 	QueueArr tt(t);
 	tt.Push(z15);

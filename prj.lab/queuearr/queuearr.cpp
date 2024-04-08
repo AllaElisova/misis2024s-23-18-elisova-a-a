@@ -139,7 +139,7 @@ void QueueArr::Push(const Complex& complex){
 }
 
 void QueueArr::Pop() noexcept{
-	if (data_ != nullptr) {
+	if ((data_ != nullptr) && (size_ > 0)) {
 		int temp = (head_ + 1) % capacity_;
 		data_[0] = Complex(0,0);
 		head_ = temp;
