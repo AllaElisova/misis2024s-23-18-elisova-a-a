@@ -1,8 +1,11 @@
-
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+
+#include <vector>
 #include <stacklstt/stacklstt.hpp>
 #include <complex/complex.hpp>
+#include <rational/rational.hpp>
 #include "doctest.h"
+#include "vectort.h"
 
 Complex z1(1, 2);
 Complex z2(3, 4);
@@ -12,7 +15,19 @@ Complex z5(9, 10);
 Complex z6(11, 12);
 Complex z7(13, 14);
 
-TEST_CASE("default ctor") {
+TEST_CASE_TEMPLATE("stupid push", T, int, double, std::string, Complex) {
+  std::vector<T> vec = make_vector<T>();
+  StackLstT<T> sl;
+  for (T t : vec) {
+    sl.Push(t);
+  }
+  for (int i = 1; i <= vec.size(); ++i) {
+    CHECK_EQ(sl.Top(), vec[vec.size() - i]);
+    sl.Pop();
+  }
+}
+
+/*TEST_CASE("default ctor") {
   StackLstT s;
   CHECK_EQ(s.IsEmpty(), true);
 
@@ -96,4 +111,55 @@ TEST_CASE("move semantics") {
   CHECK_EQ(t.Top(), z6);
   h.Clear();
   CHECK_EQ(t.Top(), z6);
+} */
+/*
+TEST_CASE("template test 1") {
+  float num{ 9.0f };
+  StackLstT <float> s;
+  s.Push(num);
+  CHECK_EQ(s.IsEmpty(), false);
+  s.Pop();
+  CHECK_EQ(s.IsEmpty(), true);
 }
+
+Complex c{ 2.0, 2.0 };
+Rational r{ 9, 8 };
+int32_t i{ 9 };
+double d{ 9.8 };
+
+TEST_CASE_TEMPLATE("help", T, Complex, Rational, int32_t, double){
+  StackLstT<T> sc;
+  sc.Push(c);
+  CHECK_EQ(sc.Top(), Complex(2.0, 2.0));
+  sc.Push(z1);
+  sc.Push(z2);
+  CHECK_EQ(sc.Top(), z2);
+
+  StackLstT <T> sr;
+  sr.Push(r);
+  CHECK_EQ(sr.IsEmpty(), false);
+  CHECK_EQ(sr.Top(), Rational(9, 8));
+  sr.Pop();
+  CHECK_EQ(sr.IsEmpty(), true);
+  sr.Pop();
+  sr.Pop();
+  sr.Pop();
+  CHECK_EQ(sr.IsEmpty(), true);
+
+  StackLstT <T> si;
+  si.Push(i);
+  CHECK_EQ(si.Top(), 9);
+
+  StackLstT <T> sd;
+  sd.Push(d);
+  CHECK_EQ(sd.IsEmpty(), false);
+  sd.Push(5.6);
+  sd.Push(6.7);
+  sd.Push(7.8);
+  sd.Clear();
+  CHECK_EQ(sd.IsEmpty(), true);
+
+} */
+
+// в начале дефайн в котором можно перечислить типы
+// можно сделать хэдер с выносом специализаций шаблона и цеплть его к тестам
