@@ -36,3 +36,9 @@ add_executable (test_queuearrt test_queuearrt.cpp)
 target_link_libraries (test_queuearrt queuearrt)
 target_link_libraries (test_queuearrt complex)
 target_link_libraries (test_queuearrt rational)
+
+
+add_executable (test_queuelstt test_queuelstt.cpp)
+target_link_libraries (test_queuelstt queuelstt)
+target_link_libraries (test_queuelstt complex)
+target_link_libraries (test_queuelstt rational)
