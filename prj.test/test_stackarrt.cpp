@@ -5,21 +5,21 @@
 #include <string>
 #include <complex/complex.hpp>
 #include <rational/rational.hpp>
-#include <queuelstt/queuelstt.hpp>
+#include <stackarrt/stackarrt.hpp>
 #include "doctest.h"
 #include "vectort.h"
 
 TEST_CASE_TEMPLATE("stupid push", T, int, double, std::string, Complex, Rational) {
     std::vector<T> vec = make_vector<T>();
-    QueueLstT<T> ql;
+    StackArrT<T> sa;
 
     for (T t : vec) {
-        ql.Push(t);
+        sa.Push(t);
     }
 
-    for (int i = 0; i < vec.size(); ++i) {
-        CHECK_EQ(ql.Top(), vec[i]);
-        ql.Pop();
+    for (int i = 1; i <= vec.size(); ++i) {
+        CHECK_EQ(sa.Top(), vec.at(vec.size() - i));
+        sa.Pop();
     }
 }
 
