@@ -31,3 +31,8 @@ add_executable (test_stacklstt test_stacklstt.cpp)
 target_link_libraries (test_stacklstt stacklstt)
 target_link_libraries(test_stacklstt complex)
 target_link_libraries(test_stacklstt rational)
+
+add_executable (test_queuearrt test_queuearrt.cpp)
+target_link_libraries (test_queuearrt queuearrt)
+target_link_libraries (test_queuearrt complex)
+target_link_libraries (test_queuearrt rational)

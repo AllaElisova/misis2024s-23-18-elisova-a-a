@@ -15,7 +15,7 @@ Complex z5(9, 10);
 Complex z6(11, 12);
 Complex z7(13, 14);
 
-TEST_CASE_TEMPLATE("stupid push", T, int, double, std::string, Complex) {
+TEST_CASE_TEMPLATE("stupid push", T, int, double, std::string, Complex, Rational) {
   std::vector<T> vec = make_vector<T>();
   StackLstT<T> sl;
   for (T t : vec) {

@@ -12,6 +12,7 @@ template <class T>
 std::vector<T> make_vector() {
 
 	std::vector<T> v(0);
+
 	if constexpr (std::is_same_v<T, std::string>) {
 		//if (typeid(T) == typeid(std::string)) {
 		v.push_back("abc");
