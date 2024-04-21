@@ -35,8 +35,6 @@ private:
 		Node(const Node& other);
 		Node(const Node* other);
 
-		//bool operator < (const Node& other) const noexcept;
-		//bool operator > (const Node& other) const noexcept;
 		Node& operator = (const Node& other);
 
 		float value_ = 0;

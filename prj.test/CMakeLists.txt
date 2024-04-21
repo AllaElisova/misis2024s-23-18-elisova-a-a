@@ -46,3 +46,8 @@ add_executable (test_stackarrt test_stackarrt.cpp)
 target_link_libraries (test_stackarrt stackarrt)
 target_link_libraries (test_stackarrt complex)
 target_link_libraries (test_stackarrt rational)
+
+add_executable (test_queuelstprt test_queuelstprt.cpp)
+target_link_libraries (test_queuelstprt queuelstprt)
+target_link_libraries (test_queuelstprt complex)
+target_link_libraries (test_queuelstprt rational)
