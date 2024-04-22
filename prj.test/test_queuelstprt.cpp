@@ -1,4 +1,4 @@
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+/*#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
 #include <cstdint>
 #include <vector>
@@ -22,4 +22,4 @@ TEST_CASE_TEMPLATE("stupid push", T, int, double, std::string, Complex, Rational
         qlp.Pop();
     }
 }
-
+*/

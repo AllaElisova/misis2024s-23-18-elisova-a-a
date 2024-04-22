@@ -1,4 +1,4 @@
-#pragma once
+/* #pragma once
 
 #ifndef QUEUELSTPRT_QUEUELSTPRT_HPP
 #define QUEUELSTPRT_QUEUELSTPRT_HPP
@@ -38,6 +38,7 @@ private:
 		Node(const Node& other);
 		Node(const Node* other);
 
+		//template <typename T>
 		Node& operator= (const Node& other);
 
 		T value_;
@@ -47,12 +48,23 @@ private:
 
 	};
 
+
 	void copy_node(Node* cur_node, const Node* other_node) noexcept;
 
 	void Clear(Node* node) noexcept;
 
 	Node* root_ = nullptr;
 };
+
+template <typename T>
+using QuPrNode = typename QueueLstPrT<T>::Node;
+
+//template <typename T>
+QuPrNode<T>& QuPrNode<T>::operator=(const QuPrNode<T>& other) {
+	value_ = other.value_;
+	count_ = other.count_;
+	return *this;
+}
 
 template <typename T>
 QueueLstPrT<T>::QueueLstPrT(const QueueLstPrT& other) {
@@ -290,12 +302,12 @@ QueueLstPrT<T>::Node::Node(const Node* other) {
 	count_ = other->count_;
 }
 
-template <typename T>
-QueueLstPrT<T>::Node& QueueLstPrT<T>::Node::operator= (const Node& other) {
+/*template <typename T>
+QuPrNode& QuPrNode::operator= (const QuPrNode& other) {
 	value_ = other.value_;
 	count_ = other.count_;
 	return *this;
-}
+} */
 
 template <typename T>
 void QueueLstPrT<T>::copy_node(Node* cur_node, const Node* other_node) noexcept {
@@ -320,3 +332,4 @@ void QueueLstPrT<T>::copy_node(Node* cur_node, const Node* other_node) noexcept 
 }
 
 #endif 
+*/
