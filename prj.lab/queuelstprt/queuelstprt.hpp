@@ -1,4 +1,4 @@
-/* #pragma once
+/*#pragma once
 
 #ifndef QUEUELSTPRT_QUEUELSTPRT_HPP
 #define QUEUELSTPRT_QUEUELSTPRT_HPP
@@ -60,7 +60,7 @@ template <typename T>
 using QuPrNode = typename QueueLstPrT<T>::Node;
 
 //template <typename T>
-QuPrNode<T>& QuPrNode<T>::operator=(const QuPrNode<T>& other) {
+QuPrNode& QuPrNode::operator=(typename const QuPrNode& other) {
 	value_ = other.value_;
 	count_ = other.count_;
 	return *this;
@@ -308,7 +308,7 @@ QuPrNode& QuPrNode::operator= (const QuPrNode& other) {
 	count_ = other.count_;
 	return *this;
 } */
-
+ /*
 template <typename T>
 void QueueLstPrT<T>::copy_node(Node* cur_node, const Node* other_node) noexcept {
 	if (other_node != nullptr) {
@@ -332,4 +332,5 @@ void QueueLstPrT<T>::copy_node(Node* cur_node, const Node* other_node) noexcept 
 }
 
 #endif 
-*/
+
+ */
