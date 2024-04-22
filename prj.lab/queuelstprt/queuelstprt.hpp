@@ -268,14 +268,14 @@ void QueueLstPrT<T>::Clear(Node* node) noexcept {
 
 		Clear(node->left_);
 		Clear(node->right_); 
-		delete(node);
+		delete node;
 		node = nullptr;
 	}
 }
 
 template <typename T>
 QueueLstPrT<T>::~QueueLstPrT() {
-	(*this).Clear();
+	Clear();
 }
 
 template <typename T>
