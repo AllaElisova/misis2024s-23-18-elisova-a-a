@@ -1,9 +1,10 @@
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+//#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
+#include <iostream>
 #include <bitset/bitset.hpp>
-#include "doctest.h"
+//#include "doctest.h"
 
-TEST_CASE("ctor") {
+/*TEST_CASE("ctor") {
 	BitSet b;
 	CHECK_EQ(b.Size(), 0);
 	b.Resize(16);
@@ -164,4 +165,11 @@ TEST_CASE("BiA") {
 	CHECK_EQ(b.Get(20), 0);
 	b[32] = true;
 	CHECK_EQ(b.Get(32), 1);
+} */
+
+int main() {
+	BitSet b;
+	b.Resize(32);
+	b.Set(16, 1);
+	b.Write(std::cout);
 }

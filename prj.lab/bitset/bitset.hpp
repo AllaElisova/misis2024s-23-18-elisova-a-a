@@ -4,6 +4,8 @@
 #include <vector>
 #include <ostream>
 #include <istream>
+#include <string>
+
 
 class BitSet {
 	// битовые операции только для последовательностей одинакового размера
@@ -25,8 +27,8 @@ public:
 	bool Get(const int32_t index);  //получить нужный бит значит сделать побитовое и с индексом
 	void Set(const int32_t index, const bool bit);  // побитовое или с индексом
 
-	bool operator==(const BitSet& rhs) const noexcept;
-	bool operator!=(const BitSet& rhs) const noexcept;
+	bool operator==(const BitSet& other) const noexcept;
+	bool operator!=(const BitSet& other) const noexcept;
 
 	void operator~ ();
 	void operator&= (const BitSet& other);
@@ -35,14 +37,18 @@ public:
 
 	void Fill(const bool bit);
 
-	void Read(std::istream&);
-	void Write(std::ostream&) const;
+	std::istream& Read(std::istream& istrm);
+	std::ostream& Write(std::ostream& ostrm);
 
 	~BitSet() = default;
+
+	std::string MakeString() const;
+	uint8_t CheckSum();
 
 private:
 	int32_t size_ = 0;
 	std::vector <uint32_t> data_;
+	std::string marker_{ "FEFF" };
 
 	class BiA {
 	public:
@@ -66,5 +72,5 @@ BitSet operator& (const BitSet& set1, const BitSet& set2);
 BitSet operator| (const BitSet& set1, const BitSet& set2);
 BitSet operator^ (const BitSet& set1, const BitSet& set2);
 
-std::ostream& operator <<(std::ostream&, const BitSet&);
-std::istream& operator >>(std::istream&, BitSet&);
+std::ostream& operator <<(std::ostream& ostrm, BitSet& bitset);
+std::istream& operator >>(std::istream& istrm, BitSet& bitset);

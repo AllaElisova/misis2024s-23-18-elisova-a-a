@@ -87,7 +87,7 @@ void BitSet::Resize(const int32_t size) {
 }
 
 bool BitSet::Get(const int32_t index) {
-	if (index <= 0) {
+	if (index < 0) {
 		throw std::invalid_argument("negative index");
 	}
 	else if (index > size_) {
@@ -105,7 +105,7 @@ bool BitSet::Get(const int32_t index) {
 }
 
 void BitSet::Set(const int32_t index, const bool bit) {
-	if (index <= 0) {
+	if (index < 0) {
 		throw std::invalid_argument("negative index");
 	}
 	else if (index > size_) {
@@ -170,6 +170,66 @@ void BitSet::Fill(const bool bit) {
 				data_.at(data_.size() - 1) = data_.at(data_.size() - 1) & CutPos(ost);
 			}
 		}
+	}
+}
+
+
+/*std::istream& BitSet::Read(std::istream& istrm) {
+
+} */
+
+/*std::string BitSet::MakeString() const {
+	std::string result = "";
+
+	for (int i = 0; i < size_; ++i) {
+		result += std::string(Get(i);
+	}
+
+	return result;
+} */
+
+uint8_t BitSet::CheckSum(){
+	uint8_t result = 0;
+	for (int i = 0; i < size_; ++i) {
+		if ((*this).Get(i) == true) {
+			result = (result + 1) % 256;
+		}
+	}
+	return result;
+}
+
+std::ostream& BitSet::Write(std::ostream& ostrm) {
+	ostrm << marker_ << size_;
+
+	for (int i = 0; i < size_; ++i) {
+		if ((*this).Get(i) == false) {
+			ostrm << '0';
+		}
+
+		else {
+			ostrm << '1';
+		}
+	}
+	ostrm << CheckSum() << marker_;
+	return ostrm;
+}
+
+
+bool BitSet::operator==(const BitSet& other) const noexcept {
+	if ((data_ == other.data_) && (size_== other.size_)){
+		return true;
+  }
+	else {
+		return false;
+	}
+}
+
+bool BitSet::operator!=(const BitSet& other) const noexcept {
+	if ((data_ == other.data_) && (size_ == other.size_)) {
+		return false;
+	}
+	else {
+		return true;
 	}
 }
 
@@ -258,3 +318,11 @@ BitSet::BiA BitSet::operator[] (const int32_t index) {
 	BiA temp = BiA(*this, index);
 	return temp;
 }
+
+/*std::ostream& operator <<(std::ostream& ostrm, BitSet& bitset) {
+	return bitset.Write(ostrm);
+}
+
+std::istream& operator >>(std::istream& istrm, BitSet& bitset) {
+	return bitset.Read(istrm);
+} */
