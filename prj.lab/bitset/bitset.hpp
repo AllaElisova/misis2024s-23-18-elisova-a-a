@@ -2,6 +2,8 @@
 
 #include <cstdint>
 #include <vector>
+#include <ostream>
+#include <istream>
 
 class BitSet {
 	// битовые операции только для последовательностей одинакового размера
@@ -23,12 +25,18 @@ public:
 	bool Get(const int32_t index);  //получить нужный бит значит сделать побитовое и с индексом
 	void Set(const int32_t index, const bool bit);  // побитовое или с индексом
 
+	bool operator==(const BitSet& rhs) const noexcept;
+	bool operator!=(const BitSet& rhs) const noexcept;
+
 	void operator~ ();
 	void operator&= (const BitSet& other);
 	void operator|= (const BitSet& other);
 	void operator^= (const BitSet& other);
 
 	void Fill(const bool bit);
+
+	void Read(std::istream&);
+	void Write(std::ostream&) const;
 
 	~BitSet() = default;
 
@@ -57,3 +65,6 @@ public:
 BitSet operator& (const BitSet& set1, const BitSet& set2);
 BitSet operator| (const BitSet& set1, const BitSet& set2);
 BitSet operator^ (const BitSet& set1, const BitSet& set2);
+
+std::ostream& operator <<(std::ostream&, const BitSet&);
+std::istream& operator >>(std::istream&, BitSet&);
