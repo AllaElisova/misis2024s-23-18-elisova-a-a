@@ -82,7 +82,12 @@ void BitSet::Resize(const int32_t size) {
 		throw std::invalid_argument("negative size");
 	}
 	
-	data_.resize(size / 32 + 1);
+	if (size % 32 == 0) {
+		data_.resize(size / 32);
+	}
+	else {
+		data_.resize(size / 32 + 1);
+	}
 	size_ = size;
 }
 
@@ -175,26 +180,36 @@ void BitSet::Fill(const bool bit) {
 
 
 std::istream& BitSet::Read(std::istream& istrm) {
-	std::string marker = "";
+	std::string marker1 = "";
+	std::string marker2 = "";
 	int32_t size (0);
 	uint8_t checksum (0);
 	std::string data = "";
-	istrm >> marker >> size >> data >> checksum >> marker;
+	istrm >> marker1 >> size;
+	
+	BitSet temp_bitset;
+	temp_bitset.Resize(size);
+
+	for (int i = 0; i <= temp_bitset.data_.size(); ++i) {
+		int32_t elem = 0;
+		istrm >> elem;
+		temp_bitset.data_.at(i) = elem;
+	}
+	 
+	istrm >> checksum >> marker2;
 
 	if (istrm.good()) {
 
-		uint8_t count = (std::count(data.begin(), data.end(), '1')) % 256;
-
-		if ((marker == "FEFF") && (size >= 0) && (checksum == count)) {
-			size_ = size;
-			for (int i = 0; i < size; ++i) {
-				if (data.at(i) == '0') {
-					(*this)[i] = false;
-				}
-				else {
-					(*this)[i] = true;
-				}
+		int count = 0;
+		for (int i = 0; i < size; ++i) {
+			if (temp_bitset[i] == true){
+				++count;
 			}
+		}
+
+		if ((marker1 == "FEFF") && (size >= 0) && (checksum == count) && (marker2 == "FEFF")) {
+			size_ = size;
+			*this = temp_bitset;
 		}
 		else {
 			istrm.setstate(std::ios_base::failbit);
@@ -202,16 +217,6 @@ std::istream& BitSet::Read(std::istream& istrm) {
 	}
 	return istrm;
 } 
-
-/*std::string BitSet::MakeString() const {
-	std::string result = "";
-
-	for (int i = 0; i < size_; ++i) {
-		result += std::string(Get(i);
-	}
-
-	return result;
-} */
 
 uint8_t BitSet::CheckSum(){
 	uint8_t result = 0;
@@ -228,14 +233,8 @@ uint8_t BitSet::CheckSum(){
 std::ostream& BitSet::Write(std::ostream& ostrm) {
 	ostrm << 'F' << 'E' << 'F' << 'F' << size_;
 
-	for (int i = 0; i < size_; ++i) {
-		if ((*this).Get(i) == false) {
-			ostrm << '0';
-		}
-
-		else {
-			ostrm << '1';
-		}
+	for (int i = 0; i < data_.size(); ++i) {
+		ostrm << unsigned((data_.at(i)));
 	}
 
 	ostrm << unsigned(CheckSum()) << 'F' << 'E' << 'F' << 'F';
@@ -347,10 +346,36 @@ BitSet::BiA BitSet::operator[] (const int32_t index) {
 	return temp;
 }
 
-/*std::ostream& operator <<(std::ostream& ostrm, BitSet& bitset) {
-	return bitset.Write(ostrm);
+
+std::ostream& BitSet::FormatOutput(std::ostream& ostrm) {
+		
+	for (int i = 1; i <= size_; ++i) {
+
+		if ((*this).Get(i-1) == false) {
+			ostrm << '0';
+		}
+
+		else {
+			ostrm << '1';
+		}
+
+		if (i % 20 == 0) {
+			ostrm << " " << unsigned((i - 1) / 20) << "\n";
+		}
+
+		else if (i == size_) {
+			ostrm << " " << unsigned((i - 1) / 20) << "\n";
+		}
+	}
+	return ostrm;
+} 
+
+std::ostream& operator << (std::ostream& ostrm, BitSet& bitset) {
+	return (bitset.FormatOutput(ostrm));
 }
+
 
 std::istream& operator >>(std::istream& istrm, BitSet& bitset) {
 	return bitset.Read(istrm);
-} */
+	//uint8_t count = (std::count(data.begin(), data.end(), '1')) % 256;
+} 

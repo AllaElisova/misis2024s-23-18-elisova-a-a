@@ -42,7 +42,7 @@ public:
 
 	~BitSet() = default;
 
-	std::string MakeString() const;
+	std::ostream& FormatOutput(std::ostream& ostrm);
 	uint8_t CheckSum();
 
 private:

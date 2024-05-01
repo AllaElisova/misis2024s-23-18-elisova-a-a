@@ -168,15 +168,48 @@ TEST_CASE("BiA") {
 } */
 
 int main() {
-	BitSet b;
-	b.Resize(32);
-	b.Set(16, 1);
-	b.Write(std::cout);
+	std::cout << "_____unformatted ouput_____" << "\n\n";
+	BitSet test1;
+	test1.Resize(32);
+	test1.Set(16, 1);
+	test1.Write(std::cout);
 
 	std::cout << "\n";
 
-	BitSet q;
-	q.Resize(9);
-	q.Set(8, 1);
-	q.Write(std::cout);
+	BitSet test2;
+	test2.Resize(9);
+	test2.Set(2, 1);
+	test2.Set(8, 1);
+	test2.Write(std::cout);
+
+	std::cout << "\n";
+
+	BitSet test3;
+	test3.Resize(65);
+	for (int i = 0; i < 65; ++i) {
+		if (i % 3 == 0) {
+			test3.Set(i, 1);
+		}
+	}
+	test3.Write(std::cout);
+
+	std::cout << "\n\n" << "_____formatted output_____" << "\n\n";
+		
+	std::cout << test2 << "\n" << "______________________________" << "\n\n" << test3 << "\n" << "______________________________" << "\n\n";
+	
+	BitSet test4;
+	test4.Resize(1400);
+
+	for (int i = 0; i < 1400; ++i){
+		if (i % 20 == 0) {
+			test4.Set(i, 1);
+		}
+	}
+	std::cout << test4 << "\n\n";
+
+	std::cout << "_____formatted input_____" << "\n\n";
+
+	BitSet r;
+	std::cin >> r;
+	std::cout << r;
 }
