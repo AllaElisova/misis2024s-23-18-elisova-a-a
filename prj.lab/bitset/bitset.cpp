@@ -174,9 +174,34 @@ void BitSet::Fill(const bool bit) {
 }
 
 
-/*std::istream& BitSet::Read(std::istream& istrm) {
+std::istream& BitSet::Read(std::istream& istrm) {
+	std::string marker = "";
+	int32_t size (0);
+	uint8_t checksum (0);
+	std::string data = "";
+	istrm >> marker >> size >> data >> checksum >> marker;
 
-} */
+	if (istrm.good()) {
+
+		uint8_t count = (std::count(data.begin(), data.end(), '1')) % 256;
+
+		if ((marker == "FEFF") && (size >= 0) && (checksum == count)) {
+			size_ = size;
+			for (int i = 0; i < size; ++i) {
+				if (data.at(i) == '0') {
+					(*this)[i] = false;
+				}
+				else {
+					(*this)[i] = true;
+				}
+			}
+		}
+		else {
+			istrm.setstate(std::ios_base::failbit);
+		}
+	}
+	return istrm;
+} 
 
 /*std::string BitSet::MakeString() const {
 	std::string result = "";
@@ -190,16 +215,18 @@ void BitSet::Fill(const bool bit) {
 
 uint8_t BitSet::CheckSum(){
 	uint8_t result = 0;
+
 	for (int i = 0; i < size_; ++i) {
 		if ((*this).Get(i) == true) {
 			result = (result + 1) % 256;
 		}
 	}
+
 	return result;
 }
 
 std::ostream& BitSet::Write(std::ostream& ostrm) {
-	ostrm << marker_ << size_;
+	ostrm << 'F' << 'E' << 'F' << 'F' << size_;
 
 	for (int i = 0; i < size_; ++i) {
 		if ((*this).Get(i) == false) {
@@ -210,7 +237,8 @@ std::ostream& BitSet::Write(std::ostream& ostrm) {
 			ostrm << '1';
 		}
 	}
-	ostrm << CheckSum() << marker_;
+
+	ostrm << unsigned(CheckSum()) << 'F' << 'E' << 'F' << 'F';
 	return ostrm;
 }
 

@@ -172,4 +172,11 @@ int main() {
 	b.Resize(32);
 	b.Set(16, 1);
 	b.Write(std::cout);
+
+	std::cout << "\n";
+
+	BitSet q;
+	q.Resize(9);
+	q.Set(8, 1);
+	q.Write(std::cout);
 }

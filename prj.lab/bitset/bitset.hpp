@@ -48,7 +48,6 @@ public:
 private:
 	int32_t size_ = 0;
 	std::vector <uint32_t> data_;
-	std::string marker_{ "FEFF" };
 
 	class BiA {
 	public:
