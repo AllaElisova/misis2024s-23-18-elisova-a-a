@@ -2,82 +2,264 @@
 #include <queuearrt/queuearrt.hpp>
 #include <queuelstt/queuelstt.hpp>
 #include <complex/complex.hpp>
+#include <string>
+
+Complex z1 = Complex(1, 2);
 
 int main() {
-	Complex z1 = Complex(1, 2);
-	Complex z2 = Complex(2, 3);
-	Complex z3 = Complex(3, 4);
-	Complex z4 = Complex(4, 5);
 
-	QueueArrT<Complex> qa1;
-	auto start_1{ std::chrono::steady_clock::now() };
+
+	// _______________ctor____________________
+
+	auto arr_start_ctor_s{ std::chrono::steady_clock::now() };
+	QueueArrT<std::string> arr_s;
+	auto arr_end_ctor_s{ std::chrono::steady_clock::now() };
+
+
+	auto lst_start_ctor_s{ std::chrono::steady_clock::now() };
+	QueueLstT<std::string> lst_s;
+	auto lst_end_ctor_s{ std::chrono::steady_clock::now() };
+
+
+	std::chrono::nanoseconds arr_result_ctor_s{ arr_end_ctor_s - arr_start_ctor_s };
+	std::chrono::nanoseconds lst_result_ctor_s{ lst_end_ctor_s - lst_start_ctor_s };
+
+
+	std::cout << "arr ctor (string): " << arr_result_ctor_s.count() << '\n';
+	std::cout << "lst ctor (string): " << lst_result_ctor_s.count() << "\n\n";
+
+
+
+	auto arr_start_ctor_c{ std::chrono::steady_clock::now() };
+	QueueArrT<Complex> arr_c;
+	auto arr_end_ctor_c{ std::chrono::steady_clock::now() };
+
+
+	auto lst_start_ctor_c{ std::chrono::steady_clock::now() };
+	QueueLstT<Complex> lst_c;
+	auto lst_end_ctor_c{ std::chrono::steady_clock::now() };
+
+
+	std::chrono::nanoseconds arr_result_ctor_c{ arr_end_ctor_c - arr_start_ctor_c };
+	std::chrono::nanoseconds lst_result_ctor_c{ lst_end_ctor_c - lst_start_ctor_c };
+
+
+	std::cout << "arr ctor (complex): " << arr_result_ctor_c.count() << '\n';
+	std::cout << "lst ctor (complex): " << lst_result_ctor_c.count() << "\n\n";
+
+
+
+	// _________________push_______________________
+
+
+	QueueArrT<Complex> arr_5_c;
+	QueueLstT<Complex> lst_5_c;
+
+	auto arr_start_5_c{ std::chrono::steady_clock::now() };
+	for (int i = 0; i < 5; ++i) {
+		arr_5_c.Push(z1);
+	}
+	auto arr_end_5_c{ std::chrono::steady_clock::now() };
+
+
+	auto lst_start_5_c{ std::chrono::steady_clock::now() };
+	for (int i = 0; i < 5; ++i) {
+		lst_5_c.Push(z1);
+	}
+	auto lst_end_5_c{ std::chrono::steady_clock::now() };
+
+
+	std::chrono::nanoseconds arr_result_5_c(arr_end_5_c - arr_start_5_c);
+	std::chrono::nanoseconds lst_result_5_c(lst_end_5_c - lst_start_5_c);
+
+
+	std::cout << "arr push (complex x5): " << arr_result_5_c.count() << '\n';
+	std::cout << "lst push (complex x5): " << lst_result_5_c.count() << "\n\n";
+
+
+
+	QueueArrT<Complex> arr_10_c;
+	QueueLstT<Complex> lst_10_c;
+
+	auto arr_start_10_c{ std::chrono::steady_clock::now() };
+	for (int i = 0; i < 10; ++i) {
+		arr_10_c.Push(z1);
+	}
+	auto arr_end_10_c{ std::chrono::steady_clock::now() };
+
+
+	auto lst_start_10_c{ std::chrono::steady_clock::now() };
+	for (int i = 0; i < 10; ++i) {
+		lst_10_c.Push(z1);
+	}
+	auto lst_end_10_c{ std::chrono::steady_clock::now() };
+
+
+	std::chrono::nanoseconds arr_result_10_c(arr_end_10_c - arr_start_10_c);
+	std::chrono::nanoseconds lst_result_10_c(lst_end_10_c - lst_start_10_c);
+
+
+	std::cout << "arr push (complex x10): " << arr_result_10_c.count() << '\n';
+	std::cout << "lst push (complex x10): " << lst_result_10_c.count() << "\n\n";
+
+
+
+	QueueArrT<Complex> arr_25_c;
+	QueueLstT<Complex> lst_25_c;
+
+	auto arr_start_25_c{ std::chrono::steady_clock::now() };
 	for (int i = 0; i < 25; ++i) {
-		qa1.Push(z1);
-		qa1.Push(z2);
-		qa1.Push(z3);
-		qa1.Push(z4);
+		arr_25_c.Push(z1);
 	}
-	auto end_1{ std::chrono::steady_clock::now() };
+	auto arr_end_25_c{ std::chrono::steady_clock::now() };
 
 
-	QueueLstT<Complex> ql1;
-	auto start_2{ std::chrono::steady_clock::now() };
+	auto lst_start_25_c{ std::chrono::steady_clock::now() };
 	for (int i = 0; i < 25; ++i) {
-		ql1.Push(z1);
-		ql1.Push(z2);
-		ql1.Push(z3);
-		ql1.Push(z4);
+		lst_25_c.Push(z1);
 	}
-	auto end_2{ std::chrono::steady_clock::now() };
+	auto lst_end_25_c{ std::chrono::steady_clock::now() };
 
 
-	std::chrono::nanoseconds arr_result_1(end_1 - start_1);
-	std::chrono::nanoseconds lst_result_1(end_2 - start_2);
-
-	std::cout << "arr push complex 25 " << arr_result_1.count() << '\n';
-	std::cout << "lst push complex 25 " << lst_result_1.count() << '\n' << '\n';
+	std::chrono::nanoseconds arr_result_25_c(arr_end_25_c - arr_start_25_c);
+	std::chrono::nanoseconds lst_result_25_c(lst_end_25_c - lst_start_25_c);
 
 
-	QueueArrT<Complex> qa2;
-	auto start_3{ std::chrono::steady_clock::now() };
-	qa2.Push(z1);
-	qa2.Push(z2);
-	qa2.Push(z3);
-	qa2.Push(z4);
-	auto end_3{ std::chrono::steady_clock::now() };
+	std::cout << "arr push (complex x25): " << arr_result_25_c.count() << '\n';
+	std::cout << "lst push (complex x25): " << lst_result_25_c.count() << "\n\n";
 
-	QueueLstT<Complex> ql2;
-	auto start_4{ std::chrono::steady_clock::now() };
-	ql2.Push(z1);
-	ql2.Push(z2);
-	ql2.Push(z3);
-	ql2.Push(z4);
-	auto end_4{ std::chrono::steady_clock::now() };
 
-	std::chrono::nanoseconds arr_result_2(end_3 - start_3);
-	std::chrono::nanoseconds lst_result_2(end_4 - start_4);
 
-	std::cout << "arr push complex 4 " << arr_result_2.count() << '\n';
-	std::cout << "lst push complex 4 " << lst_result_2.count() << '\n' << '\n';
+	QueueArrT<Complex> arr_50_c;
+	QueueLstT<Complex> lst_50_c;
 
-	QueueArrT<int> qa_int;
-	auto start_5{ std::chrono::steady_clock::now() };
+
+	auto arr_start_50_c{ std::chrono::steady_clock::now() };
+	for (int i = 0; i < 50; ++i) {
+		arr_50_c.Push(z1);
+	}
+	auto arr_end_50_c{ std::chrono::steady_clock::now() };
+
+
+	auto lst_start_50_c{ std::chrono::steady_clock::now() };
+	for (int i = 0; i < 50; ++i) {
+		lst_50_c.Push(z1);
+	}
+	auto lst_end_50_c{ std::chrono::steady_clock::now() };
+
+
+	std::chrono::nanoseconds arr_result_50_c(arr_end_50_c - arr_start_50_c);
+	std::chrono::nanoseconds lst_result_50_c(lst_end_50_c - lst_start_50_c);
+
+
+	std::cout << "arr push (complex x50): " << arr_result_50_c.count() << '\n';
+	std::cout << "lst push (complex x50): " << lst_result_50_c.count() << "\n\n";
+
+
+
+	QueueArrT<Complex> arr_100_c;
+	QueueLstT<Complex> lst_100_c;
+
+
+	auto arr_start_100_c{ std::chrono::steady_clock::now() };
 	for (int i = 0; i < 100; ++i) {
-		qa_int.Push(i);
+		arr_100_c.Push(z1);
 	}
-	auto end_5{ std::chrono::steady_clock::now() };
+	auto arr_end_100_c{ std::chrono::steady_clock::now() };
 
 
-	QueueLstT<int> ql_int;
-	auto start_6{ std::chrono::steady_clock::now() };
+	auto lst_start_100_c{ std::chrono::steady_clock::now() };
 	for (int i = 0; i < 100; ++i) {
-		ql_int.Push(i);
+		lst_100_c.Push(z1);
 	}
-	auto end_6{ std::chrono::steady_clock::now() };
+	auto lst_end_100_c{ std::chrono::steady_clock::now() };
 
-	std::chrono::nanoseconds arr_result_3(end_5 - start_5);
-	std::chrono::nanoseconds lst_result_3(end_6 - start_6);
 
-	std::cout << "arr push int 100 " << arr_result_3.count() << '\n';
-	std::cout << "lst push int 100 " << lst_result_3.count() << '\n';
+	std::chrono::nanoseconds arr_result_100_c(arr_end_100_c - arr_start_100_c);
+	std::chrono::nanoseconds lst_result_100_c(lst_end_100_c - lst_start_100_c);
+
+
+	std::cout << "arr push (complex x100): " << arr_result_100_c.count() << '\n';
+	std::cout << "lst push (complex x100): " << lst_result_100_c.count() << "\n\n";
+
+
+
+	QueueArrT<int> arr_25_i;
+	QueueLstT<int> lst_25_i;
+
+
+	auto arr_start_25_i{ std::chrono::steady_clock::now() };
+	for (int i = 0; i < 25; ++i) {
+		arr_25_i.Push(i);
+	}
+	auto arr_end_25_i{ std::chrono::steady_clock::now() };
+
+
+	auto lst_start_25_i{ std::chrono::steady_clock::now() };
+	for (int i = 0; i < 25; ++i) {
+		lst_25_i.Push(i);
+	}
+	auto lst_end_25_i{ std::chrono::steady_clock::now() };
+
+
+	std::chrono::nanoseconds arr_result_25_i(arr_end_25_i - arr_start_25_i);
+	std::chrono::nanoseconds lst_result_25_i(lst_end_25_i - lst_start_25_i);
+
+
+	std::cout << "arr push (int x25): " << arr_result_25_i.count() << '\n';
+	std::cout << "lst push (int x25): " << lst_result_25_i.count() << "\n\n";
+
+
+
+	QueueArrT<int> arr_50_i;
+	QueueLstT<int> lst_50_i;
+
+
+	auto arr_start_50_i{ std::chrono::steady_clock::now() };
+	for (int i = 0; i < 50; ++i) {
+		arr_50_i.Push(i);
+	}
+	auto arr_end_50_i{ std::chrono::steady_clock::now() };
+
+
+	auto lst_start_50_i{ std::chrono::steady_clock::now() };
+	for (int i = 0; i < 50; ++i) {
+		lst_50_i.Push(i);
+	}
+	auto lst_end_50_i{ std::chrono::steady_clock::now() };
+
+
+	std::chrono::nanoseconds arr_result_50_i(arr_end_50_i - arr_start_50_i);
+	std::chrono::nanoseconds lst_result_50_i(lst_end_50_i - lst_start_50_i);
+
+
+	std::cout << "arr push (int x50): " << arr_result_50_i.count() << '\n';
+	std::cout << "lst push (int x50): " << lst_result_50_i.count() << "\n\n";
+
+
+
+	QueueArrT<int> arr_100_i;
+	QueueLstT<int> lst_100_i;
+
+
+	auto arr_start_100_i{ std::chrono::steady_clock::now() };
+	for (int i = 0; i < 100; ++i) {
+		arr_100_i.Push(i);
+	}
+	auto arr_end_100_i{ std::chrono::steady_clock::now() };
+
+
+	auto lst_start_100_i{ std::chrono::steady_clock::now() };
+	for (int i = 0; i < 100; ++i) {
+		lst_100_i.Push(i);
+	}
+	auto lst_end_100_i{ std::chrono::steady_clock::now() };
+
+
+	std::chrono::nanoseconds arr_result_100_i(arr_end_100_i - arr_start_100_i);
+	std::chrono::nanoseconds lst_result_100_i(lst_end_100_i - lst_start_100_i);
+
+
+	std::cout << "arr push (int x100): " << arr_result_100_i.count() << '\n';
+	std::cout << "lst push (int x100): " << lst_result_100_i.count() << "\n\n";
 }
