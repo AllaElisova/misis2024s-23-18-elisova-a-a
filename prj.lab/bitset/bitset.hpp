@@ -8,10 +8,6 @@
 
 
 class BitSet {
-	// битовые операции только для последовательностей одинакового размера
-	// нужно делать ресайз пользователю
-	// подумать над квадратными скобками на чтение и запись
-	// подумать какие могут быть форматы ввода вывода в текстовом и бинарном формате
 public:
 
 	BitSet() = default;
@@ -24,8 +20,8 @@ public:
 
 	int32_t Size() const noexcept;
 	void Resize(const int32_t size);
-	bool Get(const int32_t index);  //получить нужный бит значит сделать побитовое и с индексом
-	void Set(const int32_t index, const bool bit);  // побитовое или с индексом
+	bool Get(const int32_t index);  
+	void Set(const int32_t index, const bool bit);
 
 	bool operator==(const BitSet& other) const noexcept;
 	bool operator!=(const BitSet& other) const noexcept;

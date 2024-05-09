@@ -7,7 +7,7 @@
 BitSet::BitSet(const BitSet& other) {
 	Resize(other.size_);
 
-	for (int i = 0; i < size_ / 32 + 1; ++i) {
+	for (int i = 0; i < data_.size(); ++i) {
 		data_[i] = other.data_[i];
 	}
 }
@@ -58,7 +58,7 @@ uint32_t spos(int32_t ind, bool bit) {
 	if (bit == false) {
 		uint32_t pos = 1;
 		uint32_t d = 1;
-		for (int i = 0; i < 31; ++i) {
+		for (int i = 0; i <= 31; ++i) {
 			d = d << 1;
 			pos += d;
 		}
@@ -95,7 +95,7 @@ bool BitSet::Get(const int32_t index) {
 	if (index < 0) {
 		throw std::invalid_argument("negative index");
 	}
-	else if (index > size_) {
+	else if (index >= size_) {
 		throw std::invalid_argument("invalid index");
 	}
 	else {
@@ -113,7 +113,7 @@ void BitSet::Set(const int32_t index, const bool bit) {
 	if (index < 0) {
 		throw std::invalid_argument("negative index");
 	}
-	else if (index > size_) {
+	else if (index >= size_) {
 		throw std::invalid_argument("invalid index");
 	}
 	else {
@@ -154,9 +154,9 @@ uint32_t CutPos(uint32_t ost) {
 	uint32_t diff = 1;
 	diff = diff << 31;
 
-	for (int i = 0; i < ost; ++i) {
-		diff = diff >> 1;
+	for (int i = 0; i <= ost; ++i) {
 		pos += diff;
+		diff = diff >> 1;
 	}
 	
 	return pos;
@@ -170,8 +170,8 @@ void BitSet::Fill(const bool bit) {
 		else {
 			data_.at(i) = data_.at(i) | FillBit(bit);
 
-			uint32_t ost = size_ % 32;
-			if (ost != 0) {
+			uint32_t ost = (size_ - 1) % 32;
+			if (ost != 31) {
 				data_.at(data_.size() - 1) = data_.at(data_.size() - 1) & CutPos(ost);
 			}
 		}
@@ -260,15 +260,14 @@ bool BitSet::operator!=(const BitSet& other) const noexcept {
 	}
 }
 
-
 void BitSet::operator~() {
 
 	for (int i = 0; i < data_.size(); ++i) {
 		data_.at(i) = ~(data_.at(i));
 	}
 
-	uint32_t ost = size_ % 32;
-	if (ost != 0) {
+	uint32_t ost = (size_ - 1) % 32;
+	if (ost != 31) {
 		data_.at(data_.size() - 1) = data_.at(data_.size() - 1) & CutPos(ost);
 	}
 }
