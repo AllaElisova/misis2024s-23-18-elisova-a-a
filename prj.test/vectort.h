@@ -50,8 +50,9 @@ std::vector<T> make_vector() {
 		v.push_back(r4);
 	}
 	else {
-		v.push_back(T(123));
-		v.push_back(T(0));
+		for (int i = 0; i < 100; ++i) {
+			v.push_back(T(i));
+		}
 	}
 	return v;
 }
