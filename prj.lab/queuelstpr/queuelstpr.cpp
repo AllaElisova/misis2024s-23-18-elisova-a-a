@@ -153,45 +153,28 @@ float& QueueLstPr::Top() {
 		throw std::logic_error("top of empty queue");
 	}
 
-	else {
-		Node* temp = root_;
+	Node* temp = root_;
 
-		while (temp != nullptr) {
-			if (temp->left_ != nullptr) {
-				temp = temp->left_;
-			}
-
-			else if (temp->count_ != 0) {
-				return (temp->value_);
-			}
-
-			else {
-				return (temp->value_);
-			}
-		}
+	while (temp->left_ != nullptr) {
+		temp = temp->left_;
 	}
+
+	return (temp->value_);
 }
 
 const float& QueueLstPr::Top() const {
 	if (IsEmpty()) {
 		throw std::logic_error("top of empty queue");
 	}
-
+	
 	Node* temp = root_;
-
-	while (temp != nullptr) {
-		if (temp->left_ != nullptr) {
-			temp = temp->left_;
-		}
-
-		else if (temp->count_ != 0) {
-			return (temp->value_);
-		}
-
-		else {
-			return (temp->value_);
-		}
+	
+	while (temp->left_ != nullptr) {
+		temp = temp->left_;
 	}
+	
+
+	return (temp->value_);
 }
 
 void QueueLstPr::Clear() noexcept {
