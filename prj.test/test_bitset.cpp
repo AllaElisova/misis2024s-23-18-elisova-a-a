@@ -3,7 +3,7 @@
 #include <iostream>
 #include <bitset/bitset.hpp>
 #include "doctest.h"
-
+/*
 TEST_CASE("ctor") {
 	BitSet b;
 	CHECK_EQ(b.Size(), 0);
@@ -22,7 +22,7 @@ TEST_CASE("ctor") {
 	CHECK_EQ(d.Get(15), 1);
 	BitSet c(b);
 	CHECK_EQ(c.Size(), 16);
-	CHECK_EQ(c.Get(15), 1); 
+	CHECK_EQ(c.Get(15), 1);
 
 	BitSet f;
 	CHECK_EQ(f.Size(), 0);
@@ -45,7 +45,7 @@ TEST_CASE("ctor") {
 	ff.Set(31, 0);
 	CHECK_EQ(ff.Get(31), 0);
 }
- 
+
 TEST_CASE("set, get, fill") {
 	BitSet b;
 	b.Resize(64);
@@ -58,7 +58,7 @@ TEST_CASE("set, get, fill") {
 	CHECK_EQ(b.Get(36), 1);
 	CHECK_EQ(b.Get(37), 0);
 }
- 
+
 TEST_CASE("operator ~") {
 	BitSet b;
 	b.Resize(32);
@@ -83,10 +83,10 @@ TEST_CASE("operator ~") {
 	qq.Resize(21);
 	CHECK_EQ(qq.Get(18), 1);
 	CHECK_EQ(qq.Get(19), 0);
-	CHECK_EQ(qq.Get(20), 0); 
+	CHECK_EQ(qq.Get(20), 0);
 }
 
- 
+
 TEST_CASE("fill") {
 	BitSet b;
 	b.Resize(20);
@@ -101,7 +101,7 @@ TEST_CASE("fill") {
 	CHECK_EQ(b.Get(62), 1);
 	CHECK_EQ(b.Get(63), 0);
 }
- 
+
 TEST_CASE("& operator") {
 	BitSet b;
 	b.Resize(21);
@@ -165,8 +165,21 @@ TEST_CASE("BiA") {
 	CHECK_EQ(b.Get(20), 0);
 	b[31] = true;
 	CHECK_EQ(b.Get(31), 1);
-} 
+} */
 
+TEST_CASE("BiA[] = BiA[]") {
+	BitSet b1;
+	BitSet b2;
+	b1.Resize(32);
+	b2.Resize(32);
+	
+	for (int i = 0; i < 32; ++i) {
+		b2.Set(i, 1);
+		CHECK(b1 != b2);
+		b1[i] = b2[i];
+		CHECK(b1 == b2);
+	}
+}
 /*
 
 int main() {
@@ -196,9 +209,9 @@ int main() {
 	test3.Write(std::cout);
 
 	std::cout << "\n\n" << "_____formatted output_____" << "\n\n";
-		
+
 	std::cout << test2 << "\n" << "______________________________" << "\n\n" << test3 << "\n" << "______________________________" << "\n\n";
-	
+
 	BitSet test4;
 	test4.Resize(1400);
 

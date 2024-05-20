@@ -15,21 +15,22 @@ public:
 	BitSet(BitSet&& other) noexcept;
 	BitSet(const int32_t size);
 
-	BitSet& operator= (const BitSet& other);
+	BitSet& operator=(const BitSet& other);
 	BitSet& operator=(BitSet&& other) noexcept;
 
 	int32_t Size() const noexcept;
 	void Resize(const int32_t size);
-	bool Get(const int32_t index);  
+
+	bool Get(const int32_t index);
 	void Set(const int32_t index, const bool bit);
 
 	bool operator==(const BitSet& other) const noexcept;
 	bool operator!=(const BitSet& other) const noexcept;
 
-	void operator~ ();
-	void operator&= (const BitSet& other);
-	void operator|= (const BitSet& other);
-	void operator^= (const BitSet& other);
+	void operator~();
+	void operator&=(const BitSet& other);
+	void operator|=(const BitSet& other);
+	void operator^=(const BitSet& other);
 
 	void Fill(const bool bit);
 
@@ -48,7 +49,9 @@ private:
 	class BiA {
 	public:
 		BiA(BitSet& bs, const int32_t index);
-		BiA& operator= (const bool value);
+		BiA& operator=(const bool value);
+		BiA& operator=(const BiA& bia2);
+		BiA& operator=(const BiA&& bia2) noexcept;
 		operator bool();
 		~BiA() = default;
 
@@ -58,14 +61,14 @@ private:
 	};
 
 public:
-	BiA operator[] (const int32_t index);
+	BiA operator[](const int32_t index);
 
 };
 
 
-BitSet operator& (const BitSet& set1, const BitSet& set2);
-BitSet operator| (const BitSet& set1, const BitSet& set2);
-BitSet operator^ (const BitSet& set1, const BitSet& set2);
+BitSet operator&(const BitSet& set1, const BitSet& set2);
+BitSet operator|(const BitSet& set1, const BitSet& set2);
+BitSet operator^(const BitSet& set1, const BitSet& set2);
 
-std::ostream& operator <<(std::ostream& ostrm, BitSet& bitset);
-std::istream& operator >>(std::istream& istrm, BitSet& bitset);
+std::ostream& operator<<(std::ostream& ostrm, BitSet& bitset);
+std::istream& operator>>(std::istream& istrm, BitSet& bitset);
