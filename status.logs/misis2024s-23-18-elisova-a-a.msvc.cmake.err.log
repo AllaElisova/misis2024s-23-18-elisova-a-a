@@ -1,6 +1,7 @@
-CMake Warning:
-  Manually-specified variables were not used by the project:
-
-    BUILD_WITH_SAMPLES
+CMake Error at C:/Program Files/CMake/share/cmake-3.25/Modules/CMakeDetermineSystem.cmake:130 (message):
+  Could not find toolchain file:
+  d:/programs/vcpkg/scripts/buildsystems/vcpkg.cmake
+Call Stack (most recent call first):
+  CMakeLists.txt:3 (project)
 
 
