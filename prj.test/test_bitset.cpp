@@ -176,8 +176,10 @@ TEST_CASE("BiA[] = BiA[]") {
 	for (int i = 0; i < 32; ++i) {
 		b2.Set(i, 1);
 		CHECK(b1 != b2);
+		CHECK(b1[i] != b2[i]);
 		b1[i] = b2[i];
 		CHECK(b1 == b2);
+		CHECK(b1[i] == b2[i]);
 	}
 }
 /*

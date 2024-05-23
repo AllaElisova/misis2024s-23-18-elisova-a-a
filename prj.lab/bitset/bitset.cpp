@@ -332,14 +332,22 @@ BitSet::BiA& BitSet::BiA::operator=(const bool value) {
 	return *this;
 }
 
-BitSet::BiA& BitSet::BiA::operator=(const BitSet::BiA& bia2) {
-	bs_.Set(id_, bia2.bs_[id_]);
+BitSet::BiA& BitSet::BiA::operator=(const BiA& other) {
+	bs_.Set(id_, other.bs_[id_]);
 	return *this;
 }
 
-BitSet::BiA& BitSet::BiA::operator=(const BitSet::BiA&& bia2) noexcept {
-	bs_.Set(id_, bia2.bs_[id_]);
+BitSet::BiA& BitSet::BiA::operator=(const BiA&& other) noexcept {
+	bs_.Set(id_, other.bs_[id_]);
 	return *this;
+}
+
+bool BitSet::BiA::operator==(const BiA& other) const {
+	return ((bs_[id_] == true) && (other.bs_[id_] == true));
+}
+
+bool BitSet::BiA::operator!=(const BiA& other) const {
+	return (!(*this == other));
 }
 
 BitSet::BiA::operator bool() {

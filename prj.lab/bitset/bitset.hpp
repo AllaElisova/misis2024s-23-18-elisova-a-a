@@ -48,10 +48,15 @@ private:
 
 	class BiA {
 	public:
+		BiA() = default;
+		BiA(const BiA& other) = default;
 		BiA(BitSet& bs, const int32_t index);
 		BiA& operator=(const bool value);
-		BiA& operator=(const BiA& bia2);
-		BiA& operator=(const BiA&& bia2) noexcept;
+		BiA& operator=(const BiA& other);
+		BiA& operator=(const BiA&& other) noexcept;
+		bool operator==(const BiA& other) const;
+		bool operator!=(const BiA& other) const;
+
 		operator bool();
 		~BiA() = default;
 
