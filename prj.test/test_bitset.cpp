@@ -3,22 +3,22 @@
 #include <iostream>
 #include <bitset/bitset.hpp>
 #include "doctest.h"
-/*
+
 TEST_CASE("ctor") {
 	BitSet b;
 	CHECK_EQ(b.Size(), 0);
+
 	b.Resize(16);
-	CHECK_EQ(b.Get(2), 0);
-	CHECK_EQ(b.Get(9), 0);
 	CHECK_EQ(b.Size(), 16);
+
+	for (int i = 0; i < 16; ++i) {
+		CHECK_EQ(b.Get(i), false);
+	}
 	b.Set(15, 1);
-	CHECK_EQ(b.Get(1), false);
-	CHECK_EQ(b.Get(8), 0);
-	CHECK_EQ(b.Get(12), 0);
 	CHECK_EQ(b.Get(15), 1);
-	CHECK_THROWS(b.Get(33));
 
 	BitSet d = b;
+	CHECK_EQ(d.Size(), 16);
 	CHECK_EQ(d.Get(15), 1);
 	BitSet c(b);
 	CHECK_EQ(c.Size(), 16);
@@ -26,37 +26,42 @@ TEST_CASE("ctor") {
 
 	BitSet f;
 	CHECK_EQ(f.Size(), 0);
-	f.Resize(1);
-	CHECK_EQ(f.Size(), 1);
-	f.Set(0, 1);
-	CHECK_EQ(f.Get(0), 1);
+	
 	BitSet g;
 	CHECK_THROWS(g.Set(1, 1));
 	CHECK_THROWS(g.Get(1));
-	CHECK_THROWS(g = f);
+	g = f;
+	
+	f.Resize(1);
+	f.Set(0, 1);
+
 	BitSet ff{ f };
 	CHECK_EQ(ff.Size(), 1);
 	CHECK_EQ(ff.Get(0), 1);
 	ff.Resize(32);
-	ff.Set(31, 0);
-	CHECK_EQ(ff.Get(31), 0);
-	ff.Set(31, 1);
-	CHECK_EQ(ff.Get(31), 1);
-	ff.Set(31, 0);
-	CHECK_EQ(ff.Get(31), 0);
+	
+	for (int i = 1; i < 32; ++i) {
+		CHECK_EQ(ff.Get(i), 0);
+		ff.Set(i, 1);
+		CHECK_EQ(ff.Get(i), 1);
+	} 
 }
 
 TEST_CASE("set, get, fill") {
 	BitSet b;
 	b.Resize(64);
 	b.Fill(1);
-	CHECK_EQ(b.Get(0), 1);
-	CHECK_EQ(b.Get(63), 1);
+	for (int i = 0; i < 64; ++i) {
+		CHECK_EQ(b.Get(i), 1);
+	}
 	b.Set(35, 0);
 	b.Set(37, 0);
 	CHECK_EQ(b.Get(35), 0);
 	CHECK_EQ(b.Get(36), 1);
 	CHECK_EQ(b.Get(37), 0);
+
+	CHECK_THROWS(b.Get(-1));
+	CHECK_THROWS(b.Get(64));
 }
 
 TEST_CASE("operator ~") {
@@ -65,41 +70,25 @@ TEST_CASE("operator ~") {
 	b.Set(16, 1);
 	b.Set(17, 1);
 	~b;
-	BitSet bb = b;
+
 	CHECK_EQ(b.Get(15), 1);
-	CHECK_EQ(bb.Get(15), 1);
-	CHECK_EQ(bb.Get(16), 0);
-	CHECK_EQ(bb.Get(17), 0);
+	CHECK_EQ(b.Get(16), 0);
+	CHECK_EQ(b.Get(17), 0);
+	CHECK_EQ(b.Get(18), 1);
 
 	BitSet q;
 	q.Resize(20);
 	q.Set(19, 1);
 	~q;
-	BitSet qq = q;
-	CHECK_EQ(qq.Get(18), 1);
-	CHECK_EQ(qq.Get(19), 0);
-	CHECK_THROWS(qq.Get(20));
+	CHECK_EQ(q.Get(18), 1);
+	CHECK_EQ(q.Get(19), 0);
+	CHECK_THROWS(q.Get(20));
 
+	BitSet qq = q;
 	qq.Resize(21);
 	CHECK_EQ(qq.Get(18), 1);
 	CHECK_EQ(qq.Get(19), 0);
 	CHECK_EQ(qq.Get(20), 0);
-}
-
-
-TEST_CASE("fill") {
-	BitSet b;
-	b.Resize(20);
-	b.Fill(1);
-	b.Resize(21);
-	CHECK_EQ(b.Get(0), 1);
-	CHECK_EQ(b.Get(19), 1);
-	CHECK_EQ(b.Get(20), 0);
-	b.Resize(63);
-	b.Fill(1);
-	b.Resize(64);
-	CHECK_EQ(b.Get(62), 1);
-	CHECK_EQ(b.Get(63), 0);
 }
 
 TEST_CASE("& operator") {
@@ -159,15 +148,15 @@ TEST_CASE("^ operator") {
 TEST_CASE("BiA") {
 	BitSet b;
 	b.Resize(32);
-	b[20] = true;
-	CHECK_EQ(b.Get(20), 1);
-	b[20] = false;
-	CHECK_EQ(b.Get(20), 0);
-	b[31] = true;
-	CHECK_EQ(b.Get(31), 1);
-} */
+	for (int i = 0; i < 32; ++i) {
+		b[i] = true;
+		CHECK_EQ(b.Get(i), 1);
+		b[i] = false;
+		CHECK_EQ(b.Get(i), 0);
+	}
+} 
 
-TEST_CASE("BiA[] = BiA[]") {
+TEST_CASE("BiA[] =, ==, !=") {
 	BitSet b1;
 	BitSet b2;
 	b1.Resize(32);
@@ -230,3 +219,169 @@ int main() {
 	std::cin >> r;
 	std::cout << r;
 } */
+
+
+TEST_CASE("operator~") {
+  BitSet bs;
+  bs.Resize(49);
+  bs = ~bs;
+
+  bs.Resize(60);
+  for (int i = 0; i < 49; ++i) {
+    CHECK(bs.Get(i));
+  }
+  for (int i = 49; i < 60; ++i) {
+    CHECK_FALSE(bs.Get(i));
+  }
+}
+
+TEST_CASE("equal check") {
+	BitSet bs1;
+	bs1.Resize(4);
+	bs1[0] = false;
+	bs1[1] = true;
+	bs1[2] = false;
+	bs1[3] = true;
+
+
+	BitSet bs2;
+	bs2.Resize(4);
+	bs2[0] = false;
+	bs2[1] = true;
+	bs2[2] = false;
+	bs2[3] = true;
+
+
+	BitSet bs3;
+	bs3.Resize(4);
+	bs3[0] = false;
+	bs3[1] = false;
+	bs3[2] = true;
+	bs3[3] = true;
+
+  CHECK(bs1 == bs2);
+  CHECK_FALSE(bs1 != bs2);
+  CHECK(bs1 != bs3);
+  CHECK_FALSE(bs1 == bs3);
+}
+
+TEST_CASE("operator &=") {
+	BitSet bs1;
+	bs1.Resize(4);
+	bs1[0] = false;
+	bs1[1] = true;
+	bs1[2] = false;
+	bs1[3] = true;
+
+
+	BitSet bs2;
+	bs2.Resize(4);
+	bs2[0] = false;
+	bs2[1] = false;
+	bs2[2] = true;
+	bs2[3] = true;
+
+  BitSet bs = bs1 & bs2;
+  bs1 &= bs2;
+	BitSet answer;
+
+	answer.Resize(4);
+	answer[0] = false;
+	answer[1] = false;
+	answer[2] = false;
+	answer[3] = true;
+
+  for (int i = 0; i < 4; ++i) {
+    CHECK_EQ(answer.Get(i), bs.Get(i));
+    CHECK_EQ(answer.Get(i), bs1.Get(i));
+  }
+}
+ 
+TEST_CASE("operator |=") {
+	BitSet bs1;
+	bs1.Resize(4);
+	bs1[0] = false;
+	bs1[1] = true;
+	bs1[2] = false;
+	bs1[3] = true;
+
+
+	BitSet bs2;
+	bs2.Resize(4);
+	bs2[0] = false;
+	bs2[1] = false;
+	bs2[2] = true;
+	bs2[3] = true;
+
+  BitSet bs = bs1 | bs2;
+  bs1 |= bs2;
+
+  BitSet answer;
+	answer.Resize(4);
+	answer[0] = false;
+	answer[1] = true;
+	answer[2] = true;
+	answer[3] = true;
+
+  for (int i = 0; i < 4; ++i) {
+    CHECK_EQ(answer.Get(i), bs.Get(i));
+    CHECK_EQ(answer.Get(i), bs1.Get(i));
+  }
+}
+
+TEST_CASE("operator ^=") {
+  BitSet bs1;
+	bs1.Resize(4);
+	bs1[0] = false;
+	bs1[1] = true;
+	bs1[2] = false;
+	bs1[3] = true;
+
+
+  BitSet bs2;
+	bs2.Resize(4);
+	bs2[0] = false;
+	bs2[1] = false;
+	bs2[2] = true;
+	bs2[3] = true;
+
+  BitSet bs = bs1 ^ bs2;
+  bs1 ^= bs2;
+
+  BitSet answer;
+	answer.Resize(4);
+	answer[0] = false;
+	answer[1] = true;
+	answer[2] = true;
+	answer[3] = false;
+
+  for (int i = 0; i < 4; ++i) {
+    CHECK_EQ(answer.Get(i), bs.Get(i));
+    CHECK_EQ(answer.Get(i), bs1.Get(i));
+  }
+}
+
+
+TEST_CASE("operator[]") {
+	BitSet bs;
+	bs.Resize(4);
+	bs[0] = false;
+	bs[1] = true;
+	bs[2] = false;
+	bs[3] = true;
+
+  CHECK_FALSE(bs[0]);
+  CHECK(bs[1]);
+  CHECK_FALSE(bs[2]);
+  CHECK(bs[3]);
+
+  bs[0] = true;
+  bs[1] = true;
+  bs[2] = false;
+  bs[3] = false;
+
+  CHECK(bs[0]);
+  CHECK(bs[1]);
+  CHECK_FALSE(bs[2]);
+  CHECK_FALSE(bs[3]);
+}

@@ -260,7 +260,7 @@ bool BitSet::operator!=(const BitSet& other) const noexcept {
 	}
 }
 
-void BitSet::operator~() {
+BitSet BitSet::operator~() {
 
 	for (int i = 0; i < data_.size(); ++i) {
 		data_.at(i) = ~(data_.at(i));
@@ -270,6 +270,8 @@ void BitSet::operator~() {
 	if (ost != 31) {
 		data_.at(data_.size() - 1) = data_.at(data_.size() - 1) & CutPos(ost);
 	}
+
+	return *this;
 }
 
 void BitSet::operator&=(const BitSet& other) {

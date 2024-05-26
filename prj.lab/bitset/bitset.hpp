@@ -27,7 +27,7 @@ public:
 	bool operator==(const BitSet& other) const noexcept;
 	bool operator!=(const BitSet& other) const noexcept;
 
-	void operator~();
+	BitSet operator~();
 	void operator&=(const BitSet& other);
 	void operator|=(const BitSet& other);
 	void operator^=(const BitSet& other);
