@@ -19,6 +19,7 @@ BitSet::BitSet(BitSet&& other) noexcept {
 
 BitSet::BitSet(const int32_t size) {
 	Resize(size);
+	Fill(0);
 }
 
 BitSet& BitSet::operator=(const BitSet& other) {
@@ -340,7 +341,7 @@ BitSet::BiA& BitSet::BiA::operator=(const BiA&& other) noexcept {
 }
 
 bool BitSet::BiA::operator==(const BiA& other) const {
-	return ((bs_[id_] == true) && (other.bs_[id_] == true));
+	return (((bs_[id_] == true) && (other.bs_[id_] == true)) || ((bs_[id_] == false) && (other.bs_[id_] == false)));
 }
 
 bool BitSet::BiA::operator!=(const BiA& other) const {

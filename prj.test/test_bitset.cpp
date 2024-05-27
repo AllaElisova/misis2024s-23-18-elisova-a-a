@@ -410,4 +410,9 @@ TEST_CASE("==, !=") {
 	BitSet v;
 	BitSet vv(v);
 	CHECK(v == vv);
+
+	BitSet v1(1);
+	BitSet v11(11);
+	CHECK(v1 != v11);
+	CHECK(v1[0] == v11[0]);
 }
