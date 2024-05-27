@@ -45,6 +45,10 @@ TEST_CASE("ctor") {
 		ff.Set(i, 1);
 		CHECK_EQ(ff.Get(i), 1);
 	} 
+
+	BitSet v;
+	BitSet vv(v);
+	CHECK(vv.Size() == 0);
 }
 
 TEST_CASE("set, get, fill") {
@@ -384,4 +388,22 @@ TEST_CASE("operator[]") {
   CHECK(bs[1]);
   CHECK_FALSE(bs[2]);
   CHECK_FALSE(bs[3]);
+}
+
+TEST_CASE("==, !=") {
+	BitSet b1(130);
+	BitSet b2(130);
+	b2.Fill(1);
+	BitSet b3(b2);
+	CHECK(b2 == b3);
+	CHECK(b1 != b3);
+
+	for (int i = 0; i < 130; ++i) {
+		CHECK(b1 != b2);
+		CHECK(b1.Get(i) != b2.Get(i));
+		CHECK(b1[i] != b2[i]);
+		b2[i] = false;
+	}
+	CHECK(b1 == b2);
+	CHECK(b3 != b2);
 }

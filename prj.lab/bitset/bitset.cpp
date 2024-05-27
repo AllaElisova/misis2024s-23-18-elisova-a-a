@@ -78,7 +78,7 @@ int32_t BitSet::Size() const noexcept {
 }
 
 void BitSet::Resize(const int32_t size) {
-	if (size <= 0) {
+	if (size < 0) {
 		throw std::invalid_argument("negative size");
 	}
 
