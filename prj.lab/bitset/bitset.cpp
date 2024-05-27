@@ -243,7 +243,7 @@ std::ostream& BitSet::Write(std::ostream& ostrm) {
 
 
 bool BitSet::operator==(const BitSet& other) const noexcept {
-	if ((data_ == other.data_) && (size_ == other.size_)) {
+	if ((size_ == other.size_) && (data_ == other.data_)) {
 		return true;
 	}
 	else {
@@ -252,12 +252,7 @@ bool BitSet::operator==(const BitSet& other) const noexcept {
 }
 
 bool BitSet::operator!=(const BitSet& other) const noexcept {
-	if ((data_ == other.data_) && (size_ == other.size_)) {
-		return false;
-	}
-	else {
-		return true;
-	}
+	return (!(*this == other));
 }
 
 BitSet BitSet::operator~() {

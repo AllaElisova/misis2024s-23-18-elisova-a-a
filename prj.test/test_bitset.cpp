@@ -406,4 +406,8 @@ TEST_CASE("==, !=") {
 	}
 	CHECK(b1 == b2);
 	CHECK(b3 != b2);
+
+	BitSet v;
+	BitSet vv(v);
+	CHECK(v == vv);
 }
